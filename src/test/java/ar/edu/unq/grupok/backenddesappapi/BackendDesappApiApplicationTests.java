@@ -1,7 +1,6 @@
 package ar.edu.unq.grupok.backenddesappapi;
 
 import ar.edu.unq.grupok.backenddesappapi.model.Crypto;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +11,7 @@ import java.util.*;
 class BackendDesappApiApplicationTests {
 	private Crypto aRandomCrypto = anyCrypto();
 
-	private @NotNull Crypto anyCrypto() {
+	private Crypto anyCrypto() {
 		Crypto aCrypto = new Crypto("ALICEUSDT", 1.574);
 		return aCrypto;
 	}
