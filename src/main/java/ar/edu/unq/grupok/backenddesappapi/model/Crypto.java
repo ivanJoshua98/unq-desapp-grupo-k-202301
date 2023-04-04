@@ -1,7 +1,6 @@
 package ar.edu.unq.grupok.backenddesappapi.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +33,10 @@ public class Crypto {
 	}
 	
 	public void setPrice(Double price) {
-		this.price = price;
-		this.priceHistory.put(LocalDateTime.now(), price);
+		if (price != this.price) {
+			this.price = price;
+			this.priceHistory.put(LocalDateTime.now(), price);
+		}
 	}
 	
 	public Map<LocalDateTime, Double> pricesOfTheLast24Hours(){
