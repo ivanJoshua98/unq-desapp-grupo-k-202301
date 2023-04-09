@@ -10,8 +10,8 @@ public class UserUnitTests {
     public void testConstructor() {
         String name = "Carlos";
         String lastName = "Perez";
-        String email = "johndoe@example.com";
-        String address = "123 Main St";
+        String email = "CarlosPerez@example.com";
+        String address = "calle 123";
         String password = "mypassword";
         Integer cvu = 12345;
         Integer criptoWallet = 67890;
@@ -32,8 +32,8 @@ public class UserUnitTests {
     @Test
     public void testConstructorInvalidName() {
         String name = "C";
-        String lastName = "Doe";
-        String email = "johndoe@example.com";
+        String lastName = "Perez";
+        String email = "carlosperez@example.com";
         String address = "123 Main St";
         String password = "mypassword";
         Integer cvu = 12345;
@@ -46,7 +46,7 @@ public class UserUnitTests {
     public void testConstructorInvalidLastName() {
         String name = "Carlos";
         String lastName = "P";
-        String email = "johndoe@example.com";
+        String email = "carlosperez@example.com";
         String address = "123 Main St";
         String password = "mypassword";
         Integer cvu = 12345;
