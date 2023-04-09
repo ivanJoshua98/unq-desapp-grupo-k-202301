@@ -4,7 +4,7 @@ import ar.edu.unq.grupok.backenddesappapi.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class UserUnitTests {
+public class UserUnitTest {
 
     @Test
     public void testConstructor() {

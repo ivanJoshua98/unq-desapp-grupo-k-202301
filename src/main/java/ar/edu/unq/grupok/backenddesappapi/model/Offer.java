@@ -77,7 +77,7 @@ public class Offer {
 	}
 	
 	public void processTransaction() {
-		
+		this.offerState = OfferState.INPROCESS;
 	}
 
 }

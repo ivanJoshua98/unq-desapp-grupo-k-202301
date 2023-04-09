@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 
-public class CryptoUnitTests {
+public class CryptoUnitTest {
     private Crypto aRandomCrypto = new Crypto("ALICEUSDT", 1.574);
 
     @Test
