@@ -24,9 +24,18 @@ public class User {
 	private List<Offer> offers;
 	
 	public User(String name, String lastName, String email, String address, String password,
-				Integer cvu, Integer criptoWallet, Integer reputation) {
+				Integer cvu, Integer criptoWallet) {
 
 		super();
+
+		if (name.length() < 3 || name.length() > 30) {
+			throw new IllegalArgumentException("El nombre debe tener una longitud mínima de 3 y máxima de 30 caracteres.");
+		}
+
+		if (lastName.length() < 3 || lastName.length() > 30) {
+			throw new IllegalArgumentException("El apellido debe tener una longitud mínima de 3 y máxima de 30 caracteres.");
+		}
+
 		this.name = name;
 		this.lastName = lastName;
 		this.email = email;
@@ -34,7 +43,7 @@ public class User {
 		this.password = password;
 		this.cvu = cvu;
 		this.criptoWallet = criptoWallet;
-		this.reputation = reputation;
+		this.reputation = 0;
 		this.offers = new ArrayList<>();
 	};
 	
