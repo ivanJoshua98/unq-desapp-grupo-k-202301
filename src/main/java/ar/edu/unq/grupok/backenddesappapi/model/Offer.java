@@ -1,7 +1,21 @@
 package ar.edu.unq.grupok.backenddesappapi.model;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import jakarta.persistence.*;
+
+@Entity
 public class Offer {
 
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+	
+	@OneToOne
+	@JoinTable(name = "offered_crypto",
+	            joinColumns = @JoinColumn(name = "crypto_symbol"),
+	            inverseJoinColumns = @JoinColumn(name = "offer_id"))
 	private Crypto crypto;
 	
 	private Integer amountOfCrypto;
@@ -10,13 +24,29 @@ public class Offer {
 	
 	private Integer amountInPesos;
 	
-	private String userName;
+	@OneToOne
+	@JoinTable(name = "offer's_author",
+	            joinColumns = @JoinColumn(name = "user_id"),
+	            inverseJoinColumns = @JoinColumn(name = "offer_id"))
+	private User author;
 	
 	private OperationType operationType;
 	
 	private OfferState offerState;
+
+	@OneToOne
+	@JoinTable(name = "client's_author",
+	            joinColumns = @JoinColumn(name = "user_id"),
+	            inverseJoinColumns = @JoinColumn(name = "offer_id"))
+	private User client;
 	
-	public Offer(Crypto crypto, Integer amountOfCrypto, Double priceOfCrypto, Integer amountInPesos, String userName,
+	@Basic
+	private LocalDateTime creationDate; 
+	
+	@Basic
+	private LocalDateTime tradingStartDate;
+	
+	public Offer(Crypto crypto, Integer amountOfCrypto, Double priceOfCrypto, Integer amountInPesos, User author,
 				OperationType operationType) throws InvalidPublishedPriceException {
 		
 		super();
@@ -28,11 +58,12 @@ public class Offer {
 		} else {
 			throw new InvalidPublishedPriceException("the published price of the crypto is invalid");
 		}
-			
+
 		this.amountInPesos = amountInPesos;
-		this.userName = userName;
+		this.author = author;
 		this.operationType = operationType;
 		this.offerState = OfferState.OPEN;
+		this.creationDate = LocalDateTime.now();
 	}
 	
 	
@@ -62,9 +93,18 @@ public class Offer {
 	}
 
 
-	public String getUserName() {
-		return userName;
+	public User getAuthor() {
+		return author;
 	}
+	
+	public User getClient() {
+		return client;
+	}
+	
+	public LocalDateTime getCreationDate() {
+		return creationDate;
+	}
+		
 
 
 	public OperationType getOperationType() {
@@ -75,9 +115,47 @@ public class Offer {
 	public OfferState getOfferState() {
 		return offerState;
 	}
-	
-	public void processTransaction() {
+
+	public void offerAccepted(User user, LocalDateTime tradingStartDate) {
+		try {
+			checkOffer();
+			this.offerState = OfferState.INPROCESS;
+			this.client = user;
+			this.tradingStartDate = tradingStartDate;
+		} catch (PriceDifferenceException e) {
+			this.offerState = OfferState.CANCELLED;
+		}
+
+	}
+
+	private void checkOffer() throws PriceDifferenceException {
+		//purchase
+		if (operationType == OperationType.PURCHASE && crypto.getPrice() > priceOfCrypto ) {
+			throw new PriceDifferenceException("the price of the system is higher than the price indicated by the user");
+		}
+		//sale
+		if (operationType == OperationType.SALE && crypto.getPrice() < priceOfCrypto) {
+			throw new PriceDifferenceException("the system price is below the price indicated by the user");
+		}
 		
 	}
 
+	public void finishOffer(LocalDateTime endDate) {
+		this.offerState = OfferState.CLOSE;
+		
+		author.increaseReputation(tradingStartDate, endDate);
+		author.addSuccessfullyOperation(this);
+		
+		client.increaseReputation(tradingStartDate, endDate);
+		client.addSuccessfullyOperation(this);
+		
+	}
+
+
+	public void operationCancelled(User user) {
+		this.offerState = OfferState.OPEN;
+		user.decreaseReputation();
+	}
+	
+	
 }
