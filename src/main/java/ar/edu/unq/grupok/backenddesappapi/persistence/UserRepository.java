@@ -1,6 +1,5 @@
-package persistence;
+package ar.edu.unq.grupok.backenddesappapi.persistence;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +12,6 @@ public interface UserRepository extends JpaRepository<User, UUID>{
 	
 	User findByEmail(String email);
 	
-	Optional<User> findByUsername(String username);
+	User findByName(String username);
 	
 }

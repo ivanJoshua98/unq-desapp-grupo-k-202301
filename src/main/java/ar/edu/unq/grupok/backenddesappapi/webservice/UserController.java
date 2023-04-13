@@ -1,4 +1,4 @@
-package webservice;
+package ar.edu.unq.grupok.backenddesappapi.webservice;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.grupok.backenddesappapi.model.User;
-import service.UserService;
-
+import ar.edu.unq.grupok.backenddesappapi.service.UserServiceImpl;
 
 @RestController
 @Transactional
@@ -23,7 +22,7 @@ import service.UserService;
 public class UserController {
 
 	@Autowired
-	private UserService userService;
+	private UserServiceImpl userService;
 	
 	@GetMapping("/users")
 	public ResponseEntity<List<UserDTO>> registeredUsers(){

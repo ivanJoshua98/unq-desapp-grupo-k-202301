@@ -1,6 +1,6 @@
 package ar.edu.unq.grupok.backenddesappapi.model;
 
-public class UserWithoutOperationsException extends Exception {
+public class UserWithoutOperationsException extends RuntimeException {
 	
 	/**
 	 * 

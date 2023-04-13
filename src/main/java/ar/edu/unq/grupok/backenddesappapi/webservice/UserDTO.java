@@ -1,4 +1,4 @@
-package webservice;
+package ar.edu.unq.grupok.backenddesappapi.webservice;
 
 import ar.edu.unq.grupok.backenddesappapi.model.ValidPassword;
 import jakarta.validation.constraints.Email;
@@ -23,21 +23,21 @@ public class UserDTO {
 	    private String password;
 	    
 	    @Size(min = 22, max = 22, message = "Invalid length for CVU")
-	    private Integer cvuMercadoPago;
+	    private String cvuMercadoPago;
 	    
 	    @Size(min = 8, max = 8, message = "Invalid length for wallet")
-	    private Integer criptoWallet;
+	    private String criptoWallet;
 
 
 	    public UserDTO() {
 	    	super();
 	    }
 		
-	    public Integer getCriptoWallet() {
+	    public String getCriptoWallet() {
 	        return criptoWallet;
 	    }
 
-	    public Integer getCvu() {
+	    public String getCvu() {
 	        return cvuMercadoPago;
 	    }
 	    
@@ -81,11 +81,11 @@ public class UserDTO {
 	        this.password = password;
 	    }
 
-	    public void setCvu(Integer cvuMercadoPago) {
+	    public void setCvu(String cvuMercadoPago) {
 	        this.cvuMercadoPago = cvuMercadoPago;
 	    }
 
-	    public void setCriptoWallet(Integer criptoWallet) {
+	    public void setCriptoWallet(String criptoWallet) {
 	        this.criptoWallet = criptoWallet;
 	    }
 

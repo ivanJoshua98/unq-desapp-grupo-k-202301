@@ -25,9 +25,9 @@ public class User {
 	
 	private String password;
 	
-	private Integer cvu;
+	private String cvu;
 	
-	private Integer criptoWallet;
+	private String criptoWallet;
 
 	@ManyToMany
 	@JoinTable(name = "user's_offers",
@@ -43,8 +43,12 @@ public class User {
 	            inverseJoinColumns = @JoinColumn(name = "offer_id"))
 	private List<Offer> successfulOperations;
 	
+	public User() {
+		super();
+	}
+	
 	public User(String name, String lastName, String email, String address, String password,
-				Integer cvu, Integer criptoWallet) {
+				String cvu, String criptoWallet) {
 
 		super();
 		this.name = name;
@@ -79,21 +83,21 @@ public class User {
 		return password;
 	}
 
-	public Integer getCvu() {
+	public String getCvu() {
 		return cvu;
 	}
 
-	public Integer getCriptoWallet() {
+	public String getCriptoWallet() {
 		return criptoWallet;
 	}
 
-	public Integer getReputation() throws UserWithoutOperationsException {
+	/*public Integer getReputation() {
 		Integer numberOfOperations = this.successfulOperations.size(); 
 		if (numberOfOperations == 0) {
 			throw new UserWithoutOperationsException("User without operations");
 		}
 		return points / numberOfOperations;
-	}
+	}*/
 
 	public void addOperation(Offer offer) {
 		this.offers.add(offer);

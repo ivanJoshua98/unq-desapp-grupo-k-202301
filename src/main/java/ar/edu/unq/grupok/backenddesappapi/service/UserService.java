@@ -1,4 +1,4 @@
-package service;
+package ar.edu.unq.grupok.backenddesappapi.service;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,16 +1,17 @@
-package service;
+package ar.edu.unq.grupok.backenddesappapi.service;
 
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.grupok.backenddesappapi.model.UserNotFoundException;
+import ar.edu.unq.grupok.backenddesappapi.persistence.UserRepository;
 import ar.edu.unq.grupok.backenddesappapi.model.EmailAlreadyUsedException;
 import ar.edu.unq.grupok.backenddesappapi.model.User;
-import persistence.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -53,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByUsername(String username) {
-		return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + username));
+		return userRepository.findByName(username);//.orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + username));
 	}
 
 
