@@ -4,14 +4,24 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Crypto {
 
+	@Id
 	private String symbol;
 
 	private Double price;
 	
+	@Basic
 	private LocalDateTime dateTimeOfLastPrice;
 	
+	@ElementCollection
+    @CollectionTable(name = "historical_prices", 
+      joinColumns = {@JoinColumn(name = "cripto_symbol", referencedColumnName = "symbol")})
+    @MapKeyColumn(name = "quotation_date")
+    @Column(name = "prices")
 	private Map<LocalDateTime, Double> priceHistory;
 	
 	public Crypto(String symbol, Double price) {
