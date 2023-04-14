@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -91,13 +93,14 @@ public class User {
 		return criptoWallet;
 	}
 
-	/*public Integer getReputation() {
+	@JsonIgnore	
+	public Integer getReputation() {
 		Integer numberOfOperations = this.successfulOperations.size(); 
 		if (numberOfOperations == 0) {
 			throw new UserWithoutOperationsException("User without operations");
 		}
 		return points / numberOfOperations;
-	}*/
+	}
 
 	public void addOperation(Offer offer) {
 		this.offers.add(offer);
