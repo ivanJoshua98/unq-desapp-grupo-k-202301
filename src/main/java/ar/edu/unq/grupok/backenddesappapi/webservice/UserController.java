@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.grupok.backenddesappapi.model.User;
 import ar.edu.unq.grupok.backenddesappapi.service.UserServiceImpl;
+import jakarta.validation.Valid;
 
 @RestController
 @Transactional
@@ -34,7 +35,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<User> registerUser(@RequestBody UserDTO newUser){
+	public ResponseEntity<User> registerUser(@Valid @RequestBody UserDTO newUser){
 		User user = new User(newUser.getName(), 
 							 newUser.getLastName(),
 							 newUser.getEmail(),
