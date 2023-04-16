@@ -53,6 +53,15 @@ public class User {
 				String cvu, String criptoWallet) {
 
 		super();
+
+		if (name.length() < 3 || name.length() > 30) {
+			throw new IllegalArgumentException("El nombre debe tener una longitud mínima de 3 y máxima de 30 caracteres.");
+		}
+
+		if (lastName.length() < 3 || lastName.length() > 30) {
+			throw new IllegalArgumentException("El apellido debe tener una longitud mínima de 3 y máxima de 30 caracteres.");
+		}
+
 		this.name = name;
 		this.lastName = lastName;
 		this.email = email;

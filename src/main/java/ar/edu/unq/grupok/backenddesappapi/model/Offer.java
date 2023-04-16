@@ -115,7 +115,7 @@ public class Offer {
 	public OfferState getOfferState() {
 		return offerState;
 	}
-
+  
 	public void offerAccepted(User user, LocalDateTime tradingStartDate) {
 		try {
 			checkOffer();
@@ -137,7 +137,6 @@ public class Offer {
 		if (operationType == OperationType.SALE && crypto.getPrice() < priceOfCrypto) {
 			throw new PriceDifferenceException("the system price is below the price indicated by the user");
 		}
-		
 	}
 
 	public void finishOffer(LocalDateTime endDate) {
