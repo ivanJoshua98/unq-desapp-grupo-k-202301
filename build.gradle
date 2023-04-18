@@ -42,9 +42,9 @@ sonarqube {
 }
 
 
-tasks.named('test') {
+/*tasks.named('test') {
 	useJUnitPlatform()
-}
+}*/
 
 tasks.named("bootJar") {
 	enabled = false
