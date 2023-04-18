@@ -32,6 +32,16 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
+
+sonarqube {
+  properties {
+    property "sonar.projectKey", "unq-desapp-grupo-k-202301"
+    property "sonar.organization", "ivanjoshua98"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
+}
+
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
@@ -41,10 +51,7 @@ tasks.jar {
 }
 
 
-sonarqube {
-  properties {
-    property "sonar.projectKey", "unq-desapp-grupo-k-202301"
-    property "sonar.organization", "ivanjoshua98"
-    property "sonar.host.url", "https://sonarcloud.io"
-  }
+jar {
+    baseName = 'app'
+    version = '0.0.1'
 }
