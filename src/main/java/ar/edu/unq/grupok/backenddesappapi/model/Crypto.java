@@ -30,7 +30,7 @@ public class Crypto {
 		this.symbol = symbol;
 		this.price = price;
 		this.dateTimeOfLastPrice = LocalDateTime.now();
-		this.priceHistory = new HashMap<LocalDateTime, Double>();
+		this.priceHistory = new HashMap<>();
 		this.priceHistory.put(dateTimeOfLastPrice, price);
 	}
 
@@ -43,7 +43,7 @@ public class Crypto {
 	}
 	
 	public void setPrice(Double price) {
-		if (price != this.price) {
+		if (!(price.equals(this.price))) {
 			this.price = price;
 			this.priceHistory.put(LocalDateTime.now(), price);
 		}
