@@ -1,20 +1,13 @@
 package modelTests;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-import ar.edu.unq.grupok.backenddesappapi.model.Crypto;
 import ar.edu.unq.grupok.backenddesappapi.model.User;
-import ar.edu.unq.grupok.backenddesappapi.model.Offer;
-
-
 
 public class UserUnitTests {
     private User aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
             "1234567891234567891234", "12345678");
-    //private Crypto aCrypto;
-    //private Offer aOffer;
 
     @Test
     void createUserAndCheckConstructor() {
