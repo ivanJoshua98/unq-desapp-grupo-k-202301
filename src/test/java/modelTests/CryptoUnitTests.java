@@ -33,8 +33,7 @@ public class CryptoUnitTests {
         Crypto aCrypto = new Crypto("AXSUSDT", cryptoFirstPrice);
         Collection<Double> last24HoursPricesValues = aCrypto.pricesOfTheLast24Hours().values();
         Assertions.assertEquals(last24HoursPricesValues.size(),1);
-        TimeUnit.SECONDS.sleep(1);
-        aCrypto.setPrice(309.0, LocalDateTime.now());
+        aCrypto.setPrice(309.0, LocalDateTime.now().plusSeconds(1));
         last24HoursPricesValues = aCrypto.pricesOfTheLast24Hours().values();
         Assertions.assertEquals(last24HoursPricesValues.size(),2);
     }
@@ -43,10 +42,8 @@ public class CryptoUnitTests {
         Double cryptoFirstPrice = 308.5;
         Crypto aCrypto = new Crypto("AXSUSDT", cryptoFirstPrice);
         Collection<Double> last24HoursPricesValues = aCrypto.pricesOfTheLast24Hours().values();
-        TimeUnit.SECONDS.sleep(1);
         aCrypto.setPrice(309.0, LocalDateTime.now());
-        TimeUnit.SECONDS.sleep(1);
-        aCrypto.setPrice(309.0, LocalDateTime.now());
+        aCrypto.setPrice(309.0, LocalDateTime.now().plusSeconds(1));
         last24HoursPricesValues = aCrypto.pricesOfTheLast24Hours().values();
         Assertions.assertEquals(last24HoursPricesValues.size(),2);
     }
