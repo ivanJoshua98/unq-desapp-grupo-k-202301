@@ -1,13 +1,23 @@
 package modelTests;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ar.edu.unq.grupok.backenddesappapi.model.User;
 import org.junit.jupiter.api.Assertions;
 
+import ar.edu.unq.grupok.backenddesappapi.model.Crypto;
+import ar.edu.unq.grupok.backenddesappapi.model.User;
+import ar.edu.unq.grupok.backenddesappapi.model.Offer;
+
+
+
 public class UserUnitTests {
+    private User aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
+            "1234567891234567891234", "12345678");
+    //private Crypto aCrypto;
+    //private Offer aOffer;
 
     @Test
-    void createUserAndCheckData() {
+    void createUserAndCheckConstructor() {
         User aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
                 "1234567891234567891234", "12345678");
 
@@ -20,6 +30,38 @@ public class UserUnitTests {
         Assertions.assertEquals("12345678", aUser.getCriptoWallet());
     }
 
+    @Test
+    public void testAddOffer() {
 
+    }
 
+    @Test
+    public void testCancelLastOffer() {
+
+    }
+
+    @Test // (expected = UserWithoutOperationsException.class)
+    public void testCancelLastOfferWithNoOffers() {
+
+    }
+
+    @Test
+    public void testUpdateReputation() {
+
+    }
+
+    @Test
+    public void testUpdateReputationWithNegativeValue() {
+
+    }
+
+    @Test
+    public void testAcceptOffer() {
+
+    }
+
+    @Test
+    public void testCancelOffer() {
+
+    }
 }
