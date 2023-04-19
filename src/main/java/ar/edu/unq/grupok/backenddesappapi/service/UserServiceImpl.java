@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.grupok.backenddesappapi.model.UserNotFoundException;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(User user) {
-		if (emailIsUsed(user.getEmail())) {
+		if (Boolean.TRUE.equals(emailIsUsed(user.getEmail()))) {
 			throw new EmailAlreadyUsedException("Email: " + user.getEmail() + " is already used");
 		}
 		return userRepository.save(user);
@@ -52,7 +53,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByUsername(String username) {
-		return userRepository.findByName(username);//.orElseThrow(() -> new UsernameNotFoundException("User not found by username: " + username));
+		User user =  userRepository.findByName(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("User not found by username: " + username);
+		}
+		return user;
 	}
 
 

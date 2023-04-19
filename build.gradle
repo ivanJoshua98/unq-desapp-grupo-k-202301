@@ -41,21 +41,8 @@ sonarqube {
   }
 }
 
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
-tasks.named("bootJar") {
-	enabled = false
-}
 
-tasks.named("jar") {
-	enabled = false
-}
-
-
-jar {
-    baseName = 'app'
-    version = '0.0.1'
-}

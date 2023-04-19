@@ -10,9 +10,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @OpenAPIDefinition(info = @Info(title = "CriptoP2P", 
 								version = "1.0", 
-								description = "P2P service to buy cryptocurrencies between people,"
-										+ "	   with the aim of generating a trusted community to be "
-										+ "able to exchange cryptocurrencies for argentine money"))
+								description = "P2P service to buy cryptocurrencies between people, with the aim of generating a trusted community to be able to exchange cryptocurrencies for argentine money"))
 public class BackendDesappApiApplication {
 
 	public static void main(String[] args) {

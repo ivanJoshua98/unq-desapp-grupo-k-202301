@@ -53,7 +53,7 @@ public class Offer {
 		this.crypto = crypto;
 		this.amountOfCrypto = amountOfCrypto;
 		
-		if (this.priceIsValid(priceOfCrypto)) {
+		if (Boolean.TRUE.equals(priceIsValid(priceOfCrypto))) {
 			this.priceOfCrypto = priceOfCrypto;
 		} else {
 			throw new InvalidPublishedPriceException("the published price of the crypto is invalid");

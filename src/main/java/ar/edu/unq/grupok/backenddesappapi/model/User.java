@@ -63,7 +63,7 @@ public class User {
 		this.points = 10;
 		this.offers = new ArrayList<>();
 		this.successfulOperations = new ArrayList<>();
-	};
+	}
 	
 	public String getName() {
 		return name;

@@ -1,7 +1,6 @@
 package ar.edu.unq.grupok.backenddesappapi.webservice;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,8 +29,8 @@ public class UserController {
 		return ResponseEntity.ok()
 							 .body(userService.registeredUsers()
 									 .stream()
-									 	.map(this::convertUserEntityToUserDTO)
-									 		.collect(Collectors.toList()));
+									 	.map(this::convertUserEntityToUserDTO).toList());
+									 		//.collect(Collectors.toList()));
 	}
 	
 	@PostMapping("/register")
