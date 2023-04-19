@@ -13,19 +13,19 @@ public class Crypto {
 	private String symbol;
 
 	private Double price;
-	
+
 	@Basic
 	private LocalDateTime dateTimeOfLastPrice;
-	
+
 	@ElementCollection
-    @CollectionTable(name = "historical_prices", 
-      joinColumns = {@JoinColumn(name = "cripto_symbol", referencedColumnName = "symbol")})
-    @MapKeyColumn(name = "quotation_date")
-    @Column(name = "prices")
+	@CollectionTable(name = "historical_prices",
+			joinColumns = {@JoinColumn(name = "cripto_symbol", referencedColumnName = "symbol")})
+	@MapKeyColumn(name = "quotation_date")
+	@Column(name = "prices")
 	private Map<LocalDateTime, Double> priceHistory;
-	
+
 	public Crypto(String symbol, Double price) {
-		
+
 		super();
 		this.symbol = symbol;
 		this.price = price;
@@ -41,24 +41,23 @@ public class Crypto {
 	public Double getPrice() {
 		return price;
 	}
-	
-	public void setPrice(Double price) {
+
+	public void setPrice(Double price, LocalDateTime date) {
 		if (!(price.equals(this.price))) {
 			this.price = price;
-			this.priceHistory.put(LocalDateTime.now(), price);
+			this.priceHistory.put(date, price);
 		}
 	}
-	
+
 	public Map<LocalDateTime, Double> pricesOfTheLast24Hours(){
 		HashMap<LocalDateTime, Double> last24Hours = new HashMap<>();
 		LocalDateTime twentyFourHoursAgo = LocalDateTime.now().minusHours(24);
 
 		for (var entry : this.priceHistory.entrySet()) {
-		    if(entry.getKey().isAfter(twentyFourHoursAgo)) {
-		    	last24Hours.put(entry.getKey(), entry.getValue());
-		    }
+			if(entry.getKey().isAfter(twentyFourHoursAgo)) {
+				last24Hours.put(entry.getKey(), entry.getValue());
+			}
 		}
 		return last24Hours;
 	}
 }
-
