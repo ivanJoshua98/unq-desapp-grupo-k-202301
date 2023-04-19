@@ -30,38 +30,38 @@ public class UserUnitTests {
         Assertions.assertEquals("12345678", aUser.getCriptoWallet());
     }
 
-    @Test
-    public void testAddOffer() {
-
-    }
-
-    @Test
-    public void testCancelLastOffer() {
-
-    }
-
-    @Test // (expected = UserWithoutOperationsException.class)
-    public void testCancelLastOfferWithNoOffers() {
-
-    }
-
-    @Test
-    public void testUpdateReputation() {
-
-    }
-
-    @Test
-    public void testUpdateReputationWithNegativeValue() {
-
-    }
-
-    @Test
-    public void testAcceptOffer() {
-
-    }
-
-    @Test
-    public void testCancelOffer() {
-
-    }
+//    @Test
+//    public void testAddOffer() {
+//
+//    }
+//
+//    @Test
+//    public void testCancelLastOffer() {
+//
+//    }
+//
+//    @Test // (expected = UserWithoutOperationsException.class)
+//    public void testCancelLastOfferWithNoOffers() {
+//
+//    }
+//
+//    @Test
+//    public void testUpdateReputation() {
+//
+//    }
+//
+//    @Test
+//    public void testUpdateReputationWithNegativeValue() {
+//
+//    }
+//
+//    @Test
+//    public void testAcceptOffer() {
+//
+//    }
+//
+//    @Test
+//    public void testCancelOffer() {
+//
+//    }
 }
