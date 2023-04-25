@@ -28,7 +28,7 @@ class UserUnitTests {
 
 
     @BeforeEach
-    public void init(){
+    void init(){
         this.aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
                 "1234567891234567891234", "12345678");
     }

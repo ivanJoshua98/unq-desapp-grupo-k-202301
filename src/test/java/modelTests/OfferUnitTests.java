@@ -37,13 +37,13 @@ class OfferUnitTests {
                 OperationType.BUY);
 
         Assertions.assertEquals(offer.getCrypto().getSymbol(), aCrypto.getSymbol());
-        Assertions.assertEquals(offer.getOfferState(), OfferState.OPEN);
-        Assertions.assertEquals(offer.getPriceOfCrypto(), 1.000);
-        Assertions.assertEquals(offer.getAmountInPesos(), 400);
-        Assertions.assertEquals(offer.getAmountOfCrypto(), 50);
-        Assertions.assertEquals(offer.getAuthor().getEmail(), "johndoe@example.com");
+        Assertions.assertEquals(OfferState.OPEN, offer.getOfferState());
+        Assertions.assertEquals(1.000, offer.getPriceOfCrypto());
+        Assertions.assertEquals(400, offer.getAmountInPesos());
+        Assertions.assertEquals(50, offer.getAmountOfCrypto());
+        Assertions.assertEquals("johndoe@example.com", offer.getAuthor().getEmail());
         Assertions.assertNotNull(offer.getCreationDate());
-        Assertions.assertEquals(offer.getOperationType(), OperationType.BUY);
+        Assertions.assertEquals(OperationType.BUY, offer.getOperationType());
         Assertions.assertNull(offer.getClient());
     }
 
@@ -77,7 +77,7 @@ class OfferUnitTests {
     @Test
     void testOfferCancelledBySystem() {
         LocalDateTime tradingStartDate = LocalDateTime.now();
-        Assertions.assertEquals(aBuyOffer.getOperationType(), OperationType.BUY);
+        Assertions.assertEquals(OperationType.BUY, aBuyOffer.getOperationType());
         aCrypto.setPrice(1.500, tradingStartDate);
         aBuyOffer.offerAccepted(aUserMock, tradingStartDate);
         Assertions.assertEquals(OfferState.CANCELLED, aBuyOffer.getOfferState());
