@@ -1,13 +1,38 @@
 package modelTests;
 
+import ar.edu.unq.grupok.backenddesappapi.model.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-import ar.edu.unq.grupok.backenddesappapi.model.User;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 public class UserUnitTests {
-    private User aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
-            "1234567891234567891234", "12345678");
+    private User aUser;
+
+    @Mock
+    Offer aOffer;
+    @Mock
+    Offer anotherOffer;
+
+    @Mock
+    Crypto aCrypto;
+
+
+    @BeforeEach
+    public void init(){
+        System.out.println("Before All init() method called");
+        this.aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
+                "1234567891234567891234", "12345678");
+    }
 
     @Test
     void createUserAndCheckConstructor() {
@@ -23,38 +48,53 @@ public class UserUnitTests {
         Assertions.assertEquals("12345678", aUser.getCriptoWallet());
     }
 
-//    @Test
-//    public void testAddOffer() {
-//
-//    }
-//
-//    @Test
-//    public void testCancelLastOffer() {
-//
-//    }
-//
-//    @Test // (expected = UserWithoutOperationsException.class)
-//    public void testCancelLastOfferWithNoOffers() {
-//
-//    }
-//
-//    @Test
-//    public void testUpdateReputation() {
-//
-//    }
-//
-//    @Test
-//    public void testUpdateReputationWithNegativeValue() {
-//
-//    }
-//
-//    @Test
-//    public void testAcceptOffer() {
-//
-//    }
-//
-//    @Test
-//    public void testCancelOffer() {
-//
-//    }
+    @Test
+    public void testAddOpenOfferOperation() {
+        when(aOffer.getOfferState()).thenReturn(OfferState.OPEN);
+        aUser.addOperation(aOffer);
+        aUser.addOperation(aOffer);
+        Assertions.assertEquals(2, aUser.openOffers().size());
+    }
+
+    @Test
+    public void testGetReputationWithoutSuccessfulOperation() throws  UserWithoutOperationsException {
+        Assertions.assertThrows(UserWithoutOperationsException.class,() -> aUser.getReputation());
+    }
+
+    @Test
+    public void testIncrease10pointsOfReputationIn30minutesRange() {
+        aUser.decreaseReputation();// actual reputation = 0
+        aUser.increaseReputation(LocalDateTime.now(), LocalDateTime.now().plusMinutes(15));
+
+        aUser.addSuccessfullyOperation(aOffer);
+        Assertions.assertEquals(10, aUser.getReputation());
+    }
+
+    @Test
+    public void testIncrease5pointsOfReputationInMoreOf30minutesRange() {
+        aUser.decreaseReputation();// actual reputation = 0
+        aUser.increaseReputation(LocalDateTime.now(), LocalDateTime.now().plusMinutes(31));
+        aUser.addSuccessfullyOperation(aOffer);
+
+        Assertions.assertEquals(5, aUser.getReputation());
+    }
+
+    @Test
+    public void testDecreaseReputationDiscount20points() {
+        aUser.increaseReputation(LocalDateTime.now(), LocalDateTime.now().plusMinutes(15));
+        aUser.increaseReputation(LocalDateTime.now(), LocalDateTime.now().plusMinutes(15));
+        aUser.addSuccessfullyOperation(aOffer);
+        aUser.addSuccessfullyOperation(anotherOffer);
+        aUser.decreaseReputation();
+
+        Assertions.assertEquals(5, aUser.getReputation());
+    }
+
+    @Test
+    public void testDecreaseReputationMinimumReturn0points() {
+        aUser.addSuccessfullyOperation(aOffer);
+        aUser.decreaseReputation();
+        Assertions.assertEquals(0, aUser.getReputation());
+    }
+    
 }
