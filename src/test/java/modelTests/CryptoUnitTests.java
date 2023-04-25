@@ -6,15 +6,13 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
-public class CryptoUnitTests {
+class CryptoUnitTests {
     private Crypto aRandomCrypto = anyCrypto();
     private Crypto anyCrypto() {
         Crypto aCrypto = new Crypto("ALICEUSDT", 1.574);
         return aCrypto;
     }
-    //	@BeforeAll
-//	public void contextLoads() {
-//	}
+
     @Test
     void createNewCryptoAndCheckSymbol() {
         String symbol = "MATICUSDT";
@@ -32,10 +30,10 @@ public class CryptoUnitTests {
         Double cryptoFirstPrice = 308.5;
         Crypto aCrypto = new Crypto("AXSUSDT", cryptoFirstPrice);
         Collection<Double> last24HoursPricesValues = aCrypto.pricesOfTheLast24Hours().values();
-        Assertions.assertEquals(last24HoursPricesValues.size(),1);
+        Assertions.assertEquals(1, last24HoursPricesValues.size());
         aCrypto.setPrice(309.0, LocalDateTime.now().plusSeconds(1));
         last24HoursPricesValues = aCrypto.pricesOfTheLast24Hours().values();
-        Assertions.assertEquals(last24HoursPricesValues.size(),2);
+        Assertions.assertEquals(2,last24HoursPricesValues.size());
     }
     @Test
     void createCryptoAndSetSamePriceTwoTimes() throws InterruptedException {
@@ -45,6 +43,6 @@ public class CryptoUnitTests {
         aCrypto.setPrice(309.0, LocalDateTime.now());
         aCrypto.setPrice(309.0, LocalDateTime.now().plusSeconds(1));
         last24HoursPricesValues = aCrypto.pricesOfTheLast24Hours().values();
-        Assertions.assertEquals(last24HoursPricesValues.size(),2);
+        Assertions.assertEquals(2, last24HoursPricesValues.size());
     }
 }

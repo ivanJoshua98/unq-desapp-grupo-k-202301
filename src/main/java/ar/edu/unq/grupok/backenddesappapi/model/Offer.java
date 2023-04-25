@@ -141,7 +141,7 @@ public class Offer {
 	}
 
 	public void finishOffer(LocalDateTime endDate) {
-		this.offerState = OfferState.CLOSE;
+		this.offerState = OfferState.CLOSED;
 		
 		author.increaseReputation(tradingStartDate, endDate);
 		author.addSuccessfullyOperation(this);
