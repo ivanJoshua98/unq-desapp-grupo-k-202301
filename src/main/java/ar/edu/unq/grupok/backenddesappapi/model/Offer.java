@@ -130,7 +130,7 @@ public class Offer {
 
 	private void checkOffer() throws PriceDifferenceException {
 		//purchase
-		if (operationType == OperationType.PURCHASE && crypto.getPrice() > priceOfCrypto ) {
+		if (operationType == OperationType.BUY && crypto.getPrice() > priceOfCrypto ) {
 			throw new PriceDifferenceException("the price of the system is higher than the price indicated by the user");
 		}
 		//sale

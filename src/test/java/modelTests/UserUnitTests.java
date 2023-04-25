@@ -19,9 +19,9 @@ public class UserUnitTests {
     private User aUser;
 
     @Mock
-    Offer aOffer;
+    Offer aOfferMock;
     @Mock
-    Offer anotherOffer;
+    Offer anotherOfferMock;
 
     @Mock
     Crypto aCrypto;
@@ -29,7 +29,6 @@ public class UserUnitTests {
 
     @BeforeEach
     public void init(){
-        System.out.println("Before All init() method called");
         this.aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
                 "1234567891234567891234", "12345678");
     }
@@ -50,9 +49,9 @@ public class UserUnitTests {
 
     @Test
     public void testAddOpenOfferOperation() {
-        when(aOffer.getOfferState()).thenReturn(OfferState.OPEN);
-        aUser.addOperation(aOffer);
-        aUser.addOperation(aOffer);
+        when(aOfferMock.getOfferState()).thenReturn(OfferState.OPEN);
+        aUser.addOperation(aOfferMock);
+        aUser.addOperation(aOfferMock);
         Assertions.assertEquals(2, aUser.openOffers().size());
     }
 
@@ -66,7 +65,7 @@ public class UserUnitTests {
         aUser.decreaseReputation();// actual reputation = 0
         aUser.increaseReputation(LocalDateTime.now(), LocalDateTime.now().plusMinutes(15));
 
-        aUser.addSuccessfullyOperation(aOffer);
+        aUser.addSuccessfullyOperation(aOfferMock);
         Assertions.assertEquals(10, aUser.getReputation());
     }
 
@@ -74,7 +73,7 @@ public class UserUnitTests {
     public void testIncrease5pointsOfReputationInMoreOf30minutesRange() {
         aUser.decreaseReputation();// actual reputation = 0
         aUser.increaseReputation(LocalDateTime.now(), LocalDateTime.now().plusMinutes(31));
-        aUser.addSuccessfullyOperation(aOffer);
+        aUser.addSuccessfullyOperation(aOfferMock);
 
         Assertions.assertEquals(5, aUser.getReputation());
     }
@@ -83,8 +82,8 @@ public class UserUnitTests {
     public void testDecreaseReputationDiscount20points() {
         aUser.increaseReputation(LocalDateTime.now(), LocalDateTime.now().plusMinutes(15));
         aUser.increaseReputation(LocalDateTime.now(), LocalDateTime.now().plusMinutes(15));
-        aUser.addSuccessfullyOperation(aOffer);
-        aUser.addSuccessfullyOperation(anotherOffer);
+        aUser.addSuccessfullyOperation(aOfferMock);
+        aUser.addSuccessfullyOperation(anotherOfferMock);
         aUser.decreaseReputation();
 
         Assertions.assertEquals(5, aUser.getReputation());
@@ -92,7 +91,7 @@ public class UserUnitTests {
 
     @Test
     public void testDecreaseReputationMinimumReturn0points() {
-        aUser.addSuccessfullyOperation(aOffer);
+        aUser.addSuccessfullyOperation(aOfferMock);
         aUser.decreaseReputation();
         Assertions.assertEquals(0, aUser.getReputation());
     }
