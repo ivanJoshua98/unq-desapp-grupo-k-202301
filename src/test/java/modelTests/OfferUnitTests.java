@@ -9,7 +9,7 @@ import org.mockito.Mock;
 
 import java.time.LocalDateTime;
 
-public class OfferUnitTests {
+class OfferUnitTests {
 
     private User aUser;
     private Crypto aCrypto;
@@ -19,7 +19,7 @@ public class OfferUnitTests {
     private User aUserMock;
 
     @BeforeEach
-    public void init() throws InvalidPublishedPriceException {
+    void init() throws InvalidPublishedPriceException {
         this.aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
                 "1234567891234567891234", "12345678");
 
@@ -30,7 +30,7 @@ public class OfferUnitTests {
     }
 
     @Test
-    public void testConstructorAndGeters() throws InvalidPublishedPriceException {
+    void testConstructorAndGeters() throws InvalidPublishedPriceException {
         User authorUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
                 "1234567891234567891234", "12345678");
         Offer offer = new Offer(aCrypto, 50, 1.000, 400, authorUser,
@@ -48,7 +48,7 @@ public class OfferUnitTests {
     }
 
     @Test
-    public void testOfferConstructorInvalidPrice() throws InvalidPublishedPriceException {
+    void testOfferConstructorInvalidPrice() throws InvalidPublishedPriceException {
         Assertions.assertThrows(InvalidPublishedPriceException.class,() -> new Offer(aCrypto, 50, 1.051, 400, aUser,
                 OperationType.BUY));
         Assertions.assertThrows(InvalidPublishedPriceException.class,() -> new Offer(aCrypto, 50, 0.949, 400, aUser,
@@ -56,7 +56,7 @@ public class OfferUnitTests {
     }
 
     @Test
-    public void testOfferCryptoPriceIsValid() {
+    void testOfferCryptoPriceIsValid() {
         //offer crypto price: 1.000
         Assertions.assertTrue(aBuyOffer.priceIsValid(1.049));
         Assertions.assertTrue(aBuyOffer.priceIsValid(1.050));
@@ -68,14 +68,14 @@ public class OfferUnitTests {
     }
 
     @Test
-    public void testOfferAccepted() throws InvalidPublishedPriceException {
+    void testOfferAccepted() throws InvalidPublishedPriceException {
         LocalDateTime tradingStartDate = LocalDateTime.now();
         aBuyOffer.offerAccepted(aUserMock, tradingStartDate);
         Assertions.assertEquals(OfferState.INPROCESS, aBuyOffer.getOfferState());
     }
 
     @Test
-    public void testOfferCancelledBySystem() {
+    void testOfferCancelledBySystem() {
         LocalDateTime tradingStartDate = LocalDateTime.now();
         Assertions.assertEquals(aBuyOffer.getOperationType(), OperationType.BUY);
         aCrypto.setPrice(1.500, tradingStartDate);
@@ -84,16 +84,16 @@ public class OfferUnitTests {
     }
 
     @Test
-    public void testOperationCancelledRetursToOpen() {
+    void testOperationCancelledRetursToOpen() {
         aBuyOffer.operationCancelled(aUser);
         Assertions.assertEquals(OfferState.OPEN, aBuyOffer.getOfferState());
     }
 
     @Test
-    public void testFinishOffer() {
+    void testFinishOffer() {
         aBuyOffer.offerAccepted(aUser, LocalDateTime.now());
         aBuyOffer.finishOffer(LocalDateTime.now());
-        Assertions.assertEquals(OfferState.CLOSE, aBuyOffer.getOfferState());
+        Assertions.assertEquals(OfferState.CLOSED, aBuyOffer.getOfferState());
     }
 
 }
