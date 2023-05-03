@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.grupok.backenddesappapi.model.User;
 import ar.edu.unq.grupok.backenddesappapi.service.UserServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+@Tag(name = "User services", description = "Manage users of the application")
 @RestController
 @Transactional
 @RequestMapping("/p2p")
@@ -24,15 +27,17 @@ class UserController {
 	@Autowired
 	private UserServiceImpl userService;
 	
+	@Operation(summary = "Get all registered users")
 	@GetMapping("/users")
 	public ResponseEntity<List<UserDTO>> registeredUsers(){
 		return ResponseEntity.ok()
 							 .body(userService.registeredUsers()
 									 .stream()
 									 	.map(this::convertUserEntityToUserDTO).toList());
-									 		//.collect(Collectors.toList()));
 	}
 	
+	
+	@Operation(summary = "Register a new user")
 	@PostMapping("/register")
 	public ResponseEntity<User> registerUser(@Valid @RequestBody UserDTO newUser){
 		User user = new User(newUser.getName(), 
