@@ -4,11 +4,14 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hibernate.envers.Audited;
+
 import jakarta.persistence.*;
 
+@Audited
 @Entity
 public class Crypto {
-
+	
 	@Id
 	private String symbol;
 
@@ -17,29 +20,46 @@ public class Crypto {
 	@Basic
 	private LocalDateTime dateTimeOfLastPrice;
 
-	@ElementCollection
-	@CollectionTable(name = "historical_prices",
-			joinColumns = {@JoinColumn(name = "cripto_symbol", referencedColumnName = "symbol")})
-	@MapKeyColumn(name = "quotation_date")
-	@Column(name = "prices")
-	private Map<LocalDateTime, Double> priceHistory;
+	@Transient
+	private Map<LocalDateTime, Double> priceHistory = new HashMap<>();
 
+	public Crypto() {
+		super();
+	}
+	
 	public Crypto(String symbol, Double price) {
 
 		super();
 		this.symbol = symbol;
 		this.price = price;
 		this.dateTimeOfLastPrice = LocalDateTime.now();
-		this.priceHistory = new HashMap<>();
 		this.priceHistory.put(dateTimeOfLastPrice, price);
 	}
 
 	public String getSymbol() {
 		return symbol;
 	}
+	
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
 
 	public Double getPrice() {
 		return price;
+	}
+	
+	public void setPrice(Double price) {
+		this.price = price;
+		this.dateTimeOfLastPrice = LocalDateTime.now();
+		this.priceHistory.put(dateTimeOfLastPrice, price);
+	}
+	
+	public LocalDateTime getDateTimeOfLastPrice() {
+		return dateTimeOfLastPrice;
+	}
+
+	public void setDateTimeOfLastPrice(LocalDateTime dateTimeOfLastPrice) {
+		this.dateTimeOfLastPrice = dateTimeOfLastPrice;
 	}
 
 	public void setPrice(Double price, LocalDateTime date) {
