@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import ar.edu.unq.grupok.backenddesappapi.model.User;
 import jakarta.annotation.PostConstruct;
 
@@ -21,6 +20,9 @@ public class InitServiceInMemory {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired 
+	BinanceProxyService binanceProxyService;
 
 	@PostConstruct
 	public void initialize() {
@@ -28,9 +30,9 @@ public class InitServiceInMemory {
 			logger.warn("Init Data Using H2 DB");
 			fireInitialData();
 		}
-	}
+	}	
 	
-	private void fireInitialData() {
+	private void createAndSaveUsers( ) {
 		User user1 = new User("Lionel", "Messi", "leomessi@mail.com", "Rosario, Argentina", "Diciembre22",
 				"8205730285928123474740", "47239157");
 		
@@ -51,6 +53,11 @@ public class InitServiceInMemory {
 		userService.saveUser(user3);
 		userService.saveUser(user4);
 		userService.saveUser(user5);
+	}
+	
+	private void fireInitialData() {
+		createAndSaveUsers();
+		this.binanceProxyService.getAndSaveAllCryptos();
 	}	
 	
 }
