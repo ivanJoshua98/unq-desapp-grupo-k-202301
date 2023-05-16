@@ -57,7 +57,7 @@ public class InitServiceInMemory {
 	
 	private void fireInitialData() {
 		createAndSaveUsers();
-		this.binanceProxyService.getAndSaveAllCryptos();
+		//this.binanceProxyService.getAndSaveAllCryptos();
 	}	
 	
 }
