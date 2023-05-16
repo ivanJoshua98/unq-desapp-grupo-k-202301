@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.grupok.backenddesappapi.model.Crypto;
-import ar.edu.unq.grupok.backenddesappapi.service.BinanceProxyService;
 import ar.edu.unq.grupok.backenddesappapi.service.CryptoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,9 +25,6 @@ public class CryptoController {
 	
 	@Autowired
 	CryptoService cryptoService;
-
-	@Autowired
-	BinanceProxyService binanceProxyService;
 
 	@Operation(summary = "Get a crypto price")
 	@GetMapping("/getCryptoValue/{symbol}")

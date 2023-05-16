@@ -46,6 +46,12 @@ public class Offer {
 	@Basic
 	private LocalDateTime tradingStartDate;
 	
+	public Offer() {
+		super();
+		this.offerState = OfferState.OPEN;
+		this.creationDate = LocalDateTime.now();
+	}
+	
 	public Offer(Crypto crypto, Integer amountOfCrypto, Double priceOfCrypto, Integer amountInPesos, User author,
 				OperationType operationType) throws InvalidPublishedPriceException {
 		

@@ -65,6 +65,10 @@ public class User {
 		this.successfulOperations = new ArrayList<>();
 	}
 	
+	public UUID getId() {
+		return id;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -93,6 +97,62 @@ public class User {
 		return criptoWallet;
 	}
 
+	public List<Offer> getOffers() {
+		return offers;
+	}
+
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
+	}
+
+	public Integer getPoints() {
+		return points;
+	}
+
+	public void setPoints(Integer points) {
+		this.points = points;
+	}
+
+	public List<Offer> getSuccessfulOperations() {
+		return successfulOperations;
+	}
+
+	public void setSuccessfulOperations(List<Offer> successfulOperations) {
+		this.successfulOperations = successfulOperations;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setCvu(String cvu) {
+		this.cvu = cvu;
+	}
+
+	public void setCriptoWallet(String criptoWallet) {
+		this.criptoWallet = criptoWallet;
+	}
+	
 	@JsonIgnore	
 	public Integer getReputation() {
 		Integer numberOfOperations = this.successfulOperations.size(); 
@@ -146,6 +206,5 @@ public class User {
 	public void cancelOperation(Offer offer) {
 		offer.operationCancelled(this);
 	}
-	
 	
 }
