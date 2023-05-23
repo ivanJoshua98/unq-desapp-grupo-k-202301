@@ -45,7 +45,7 @@ public class Offer {
 	
 	@Basic
 	private LocalDateTime tradingStartDate;
-	
+
 	public Offer() {
 		super();
 		this.offerState = OfferState.OPEN;
@@ -121,8 +121,16 @@ public class Offer {
 	public OfferState getOfferState() {
 		return offerState;
 	}
+	
+	public LocalDateTime getTradingStartDate() {
+		return tradingStartDate;
+	}
 
-	public void offerAccepted(User user, LocalDateTime tradingStartDate) {
+	public void setTradingStartDate(LocalDateTime tradingStartDate) {
+		this.tradingStartDate = tradingStartDate;
+	}
+
+	public void offerAccepted(User user, LocalDateTime tradingStartDate) throws PriceDifferenceException {
 		try {
 			checkOffer();
 			this.offerState = OfferState.INPROCESS;
@@ -130,12 +138,13 @@ public class Offer {
 			this.tradingStartDate = tradingStartDate;
 		} catch (PriceDifferenceException e) {
 			this.offerState = OfferState.CANCELLED;
+			throw e;
 		}
 
 	}
 
 	private void checkOffer() throws PriceDifferenceException {
-		//purchase
+		//BUY
 		if (operationType == OperationType.BUY && crypto.getPrice() > priceOfCrypto ) {
 			throw new PriceDifferenceException("the price of the system is higher than the price indicated by the user");
 		}

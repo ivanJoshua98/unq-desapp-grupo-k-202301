@@ -1,6 +1,6 @@
 package ar.edu.unq.grupok.backenddesappapi.model;
 
-public class PriceDifferenceException extends Exception {
+public class PriceDifferenceException extends RuntimeException {
 
 	/**
 	 * 

@@ -27,7 +27,7 @@ public class OfferServiceImpl implements OfferService{
 
 	@Override
 	public Offer getOfferById(UUID id) {
-		return this.offerRepository.getReferenceById(id);
+		return this.offerRepository.findById(id).get();
 	}
 
 	@Override
