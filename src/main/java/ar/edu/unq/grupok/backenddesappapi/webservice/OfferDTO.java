@@ -1,6 +1,7 @@
 package ar.edu.unq.grupok.backenddesappapi.webservice;
 
 
+import ar.edu.unq.grupok.backenddesappapi.model.OfferState;
 import ar.edu.unq.grupok.backenddesappapi.model.OperationType;
 
 public class OfferDTO {
@@ -14,6 +15,8 @@ public class OfferDTO {
 	private Integer amountInPesos;
 	
 	private String authorEmail;
+	
+	private OfferState offerState; 
 
 	private OperationType operationType;
 	
@@ -63,6 +66,14 @@ public class OfferDTO {
 
 	public OperationType getOperationType() {
 		return operationType;
+	}
+	
+	public OfferState getOfferState() {
+		return offerState;
+	}
+
+	public void setOfferState(OfferState offerState) {
+		this.offerState = offerState;
 	}
 
 	public void setOperationType(OperationType operationType) {
