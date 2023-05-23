@@ -138,7 +138,6 @@ public class Offer {
 			this.tradingStartDate = tradingStartDate;
 		} catch (PriceDifferenceException e) {
 			this.offerState = OfferState.CANCELLED;
-			throw e;
 		}
 
 	}
