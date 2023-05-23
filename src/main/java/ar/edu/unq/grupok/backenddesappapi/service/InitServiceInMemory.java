@@ -1,11 +1,18 @@
 package ar.edu.unq.grupok.backenddesappapi.service;
 
+import java.time.LocalDateTime;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import ar.edu.unq.grupok.backenddesappapi.model.Crypto;
+import ar.edu.unq.grupok.backenddesappapi.model.InvalidPublishedPriceException;
+import ar.edu.unq.grupok.backenddesappapi.model.Offer;
+import ar.edu.unq.grupok.backenddesappapi.model.OperationType;
 import ar.edu.unq.grupok.backenddesappapi.model.User;
 import jakarta.annotation.PostConstruct;
 
@@ -21,6 +28,9 @@ public class InitServiceInMemory {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private OfferService offerService;
+	
 	@Autowired 
 	BinanceProxyService binanceProxyService;
 
@@ -32,7 +42,7 @@ public class InitServiceInMemory {
 		}
 	}	
 	
-	private void createAndSaveUsers( ) {
+	private void createAndSaveUsers(){
 		User user1 = new User("Lionel", "Messi", "leomessi@mail.com", "Rosario, Argentina", "Diciembre22",
 				"8205730285928123474740", "47239157");
 		
@@ -53,11 +63,43 @@ public class InitServiceInMemory {
 		userService.saveUser(user3);
 		userService.saveUser(user4);
 		userService.saveUser(user5);
+
 	}
+	
+	private void createAndSaveOffers() throws InvalidPublishedPriceException {
+		
+		User author = this.userService.getUserByEmail("dibumartinez@mail.com");
+		User client1 = this.userService.getUserByEmail("rodridepaul@mail.com");
+		User client2 = this.userService.getUserByEmail("fideo@mail.com");
+		User client3 = this.userService.getUserByEmail("nicoota@mail.com");
+		
+		Crypto crypto = this.binanceProxyService.getCryptoValue("ALICEUSDT");
+		Offer offer1 = new Offer(crypto, 10, crypto.getPrice(), 3523, author, OperationType.SALE);
+		Offer offer2 = new Offer(crypto, 3, crypto.getPrice(), 1056, author, OperationType.BUY);
+		Offer offer3 = new Offer(crypto, 4, crypto.getPrice(), 1408, author, OperationType.SALE);
+		
+		author.addOperation(offer1);
+		author.addOperation(offer2);
+		author.addOperation(offer3);
+		
+		client1.reportTransaction(offer1, LocalDateTime.now().plusMinutes(5));
+		client2.reportTransaction(offer2, LocalDateTime.now().plusMinutes(5));
+		client3.reportTransaction(offer3, LocalDateTime.now().plusMinutes(5));
+		
+		offerService.saveOffer(offer1);
+		offerService.saveOffer(offer2);
+		offerService.saveOffer(offer3);
+	}
+	
 	
 	private void fireInitialData() {
 		createAndSaveUsers();
-		//this.binanceProxyService.getAndSaveAllCryptos();
+		this.binanceProxyService.getAndSaveAllCryptos();
+		try {
+			createAndSaveOffers();
+		} catch (InvalidPublishedPriceException e) {
+			e.printStackTrace();
+		}
 	}	
 	
 }

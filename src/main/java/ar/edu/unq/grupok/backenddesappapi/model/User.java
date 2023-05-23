@@ -31,7 +31,7 @@ public class User {
 	
 	private String criptoWallet;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user's_offers",
 	            joinColumns = @JoinColumn(name = "user_id"),
 	            inverseJoinColumns = @JoinColumn(name = "offer_id"))
@@ -39,7 +39,7 @@ public class User {
 	
 	private Integer points;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user's_succesfully_operations",
 	            joinColumns = @JoinColumn(name = "user_id"),
 	            inverseJoinColumns = @JoinColumn(name = "offer_id"))
