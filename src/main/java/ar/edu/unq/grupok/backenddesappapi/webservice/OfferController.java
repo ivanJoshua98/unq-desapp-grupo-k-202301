@@ -1,27 +1,17 @@
 package ar.edu.unq.grupok.backenddesappapi.webservice;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
+import ar.edu.unq.grupok.backenddesappapi.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import ar.edu.unq.grupok.backenddesappapi.model.AppException;
-import ar.edu.unq.grupok.backenddesappapi.model.Crypto;
-import ar.edu.unq.grupok.backenddesappapi.model.Offer;
-import ar.edu.unq.grupok.backenddesappapi.model.OfferState;
-import ar.edu.unq.grupok.backenddesappapi.model.OperationType;
-import ar.edu.unq.grupok.backenddesappapi.model.User;
 import ar.edu.unq.grupok.backenddesappapi.service.CryptoService;
 import ar.edu.unq.grupok.backenddesappapi.service.OfferService;
 import ar.edu.unq.grupok.backenddesappapi.service.UserService;
@@ -76,7 +66,6 @@ public class OfferController {
 	public ResponseEntity<List<OpenOfferDTO>> openOffersFromAUser(@PathVariable String email){
 		
 		User user = userService.getUserByEmail(email);
-		
 		List<Offer> openOffers = user.getOffers().stream().filter(offer -> offer.getOfferState() == OfferState.OPEN).toList();
 		
 		return ResponseEntity.ok()
@@ -84,7 +73,7 @@ public class OfferController {
 									 .stream()
 									 	.map(this::convertOfferEntityToOpenOfferDTO).toList());
 	}
-	
+
 	@PutMapping("/offers/transact/{id}")
     public ResponseEntity<OfferWithActionProcessedDTO> reportTransaction(@PathVariable UUID id,@RequestBody UserEmailDTO userEmail) {
         Offer offer = offerService.getOfferById(id);
@@ -126,7 +115,7 @@ public class OfferController {
         
         return ResponseEntity.ok(offerWithActionProcessedDTO);
     }
-	
+
 	public OfferDTO convertOfferEntityToOfferDTO(Offer offer) {
 		OfferDTO offerDTO = new OfferDTO();
 		offerDTO.setCryptoSymbol(offer.getCrypto().getSymbol());

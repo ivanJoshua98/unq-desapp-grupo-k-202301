@@ -46,6 +46,9 @@ public class Offer {
 	@Basic
 	private LocalDateTime tradingStartDate;
 
+	@Basic
+	private LocalDateTime closingDate;
+
 	public Offer() {
 		super();
 		this.offerState = OfferState.OPEN;
@@ -126,6 +129,12 @@ public class Offer {
 		return tradingStartDate;
 	}
 
+	public LocalDateTime getClosingDate() { return closingDate; }
+
+	public void setClosingDate(LocalDateTime closingDate) {
+		this.closingDate = closingDate;
+	}
+
 	public void setTradingStartDate(LocalDateTime tradingStartDate) {
 		this.tradingStartDate = tradingStartDate;
 	}
@@ -162,7 +171,8 @@ public class Offer {
 		
 		client.increaseReputation(tradingStartDate, endDate);
 		client.addSuccessfullyOperation(this);
-		
+
+		this.setClosingDate(LocalDateTime.now());
 	}
 
 
