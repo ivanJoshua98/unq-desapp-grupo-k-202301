@@ -26,8 +26,7 @@ public class ExceptionHandlerAspectCustomPointcut {
 	public Object exceptionHandler(ProceedingJoinPoint joinPoint) throws Throwable {
 		log.info("Exception Handler Aspect Pointcut - AROUND START");
 		try {
-			Object obj = joinPoint.proceed();
-			return obj;
+			return joinPoint.proceed();
 		} 
 		catch (AppException e) {
 			log.info("/////// ExceptionHandlerAspectCustomPointcut - AROUND POINTCUT - Exception caught: AppException ///////");

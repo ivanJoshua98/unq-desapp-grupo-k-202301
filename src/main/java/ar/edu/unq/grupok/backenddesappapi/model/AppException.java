@@ -9,7 +9,7 @@ public class AppException extends RuntimeException {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private HttpStatus httpStatus;
+	private final HttpStatus httpStatus;
 
 	public AppException(String message, HttpStatus httpStatus) {
         super(message);
@@ -18,9 +18,5 @@ public class AppException extends RuntimeException {
 	
     public HttpStatus getHttpStatus() {
 		return httpStatus;
-	}
-
-	public void setHttpStatus(HttpStatus httpStatus) {
-		this.httpStatus = httpStatus;
 	}
 }

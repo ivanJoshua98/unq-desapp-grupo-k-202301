@@ -30,8 +30,7 @@ public class BinanceProxyService {
 	
 	
 	public Crypto getCryptoValue(String symbol) {
-	Crypto entity = restTemplate.getForObject(binanceApiURL + "ticker/price?symbol=" + symbol, Crypto.class);
-	return entity;
+		return restTemplate.getForObject(binanceApiURL + "ticker/price?symbol=" + symbol, Crypto.class);
 	}
 	
 	@Scheduled(cron = "${cron.expression:NONE}")

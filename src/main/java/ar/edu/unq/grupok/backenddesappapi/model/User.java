@@ -216,7 +216,7 @@ public class User {
 	public List<CryptoVolume> cryptoVolumes(LocalDateTime startDate, LocalDateTime endDate) {
 		List<Offer> closedOffers = this.closedOffersBetweenDates(startDate, endDate);
 		// Cryptos symbols sin repetidos
-		List<String> cryptos = new ArrayList<String>();
+		List<String> cryptos = new ArrayList<>();
 		closedOffers.forEach(offer -> {
 			String cryptoSymbol = offer.getCrypto().getSymbol();
 			if (!cryptos.contains(cryptoSymbol)) {
@@ -225,7 +225,7 @@ public class User {
 		});
 
 		// List of crypto volumes
-		List<CryptoVolume> cryptoVolumesList = new ArrayList<CryptoVolume>();
+		List<CryptoVolume> cryptoVolumesList = new ArrayList<>();
 		cryptos.forEach(cryptoSymbol -> {
 			CryptoVolume cryptoVolume = new CryptoVolume();
 			cryptoVolume.setCryptoSymbol(cryptoSymbol);

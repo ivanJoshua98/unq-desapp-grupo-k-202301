@@ -18,7 +18,7 @@ public class OpenOfferDTO {
 	
 	private Integer amountInPesos;
 	
-	private String AuthorEmail;
+	private String authorEmail;
 	
 	private Integer numberOfOperations;
 	
@@ -91,12 +91,12 @@ public class OpenOfferDTO {
 
 
 	public String getAuthorEmail() {
-		return AuthorEmail;
+		return authorEmail;
 	}
 
 
 	public void setAuthorEmail(String authorEmail) {
-		AuthorEmail = authorEmail;
+		this.authorEmail = authorEmail;
 	}
 
 
