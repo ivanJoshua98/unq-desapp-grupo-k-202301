@@ -73,10 +73,11 @@ public class InitServiceInMemory {
 		User client1 = this.userService.getUserByEmail("rodridepaul@mail.com");
 		User client2 = this.userService.getUserByEmail("fideo@mail.com");
 		User client3 = this.userService.getUserByEmail("nicoota@mail.com");
-		
+
 		Crypto crypto = this.binanceProxyService.getCryptoValue("ALICEUSDT");
+		Crypto crypto1 = this.binanceProxyService.getCryptoValue("MATICUSDT");
 		Offer offer1 = new Offer(crypto, 10, crypto.getPrice(), 3523, author, OperationType.SALE);
-		Offer offer2 = new Offer(crypto, 3, crypto.getPrice(), 1056, author, OperationType.BUY);
+		Offer offer2 = new Offer(crypto1, 3, crypto1.getPrice(), 1056, author, OperationType.BUY);
 		Offer offer3 = new Offer(crypto, 4, crypto.getPrice(), 1408, author, OperationType.SALE);
 		
 		author.addOperation(offer1);
