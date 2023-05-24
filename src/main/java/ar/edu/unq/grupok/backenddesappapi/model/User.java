@@ -230,7 +230,7 @@ public class User {
 			CryptoVolume cryptoVolume = new CryptoVolume();
 			cryptoVolume.setCryptoSymbol(cryptoSymbol);
 			closedOffers.forEach(offer -> {
-				if (offer.getCrypto().getSymbol() == cryptoSymbol){
+				if (cryptoSymbol.equals(offer.getCrypto().getSymbol())) {
 					cryptoVolume.incrementTotalAmountUSD(offer.getPriceOfCrypto());
 					cryptoVolume.incrementTotalAmountPesos(offer.getAmountInPesos());
 					cryptoVolume.incrementTotalAmountOfCrypto(offer.getAmountOfCrypto());
