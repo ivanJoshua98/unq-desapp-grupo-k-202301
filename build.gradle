@@ -6,6 +6,9 @@ plugins {
 	id "org.sonarqube" version "3.5.0.2730"
 }
 
+compileJava.options.encoding = 'utf-8'
+compileTestJava.options.encoding = 'utf-8'
+
 group = 'ar.edu.unq.grupok'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
@@ -24,11 +27,15 @@ dependencies {
     implementation 'org.jetbrains:annotations:20.1.0'
 	implementation 'org.jetbrains:annotations:20.1.0'
 	implementation 'org.passay:passay:1.6.2'
+	implementation "org.assertj:assertj-core:2.9.1"
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.1.0'
 	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	
+	// https://mvnrepository.com/artifact/junit/junit
+	testImplementation group: 'junit', name: 'junit', version: '4.13.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
@@ -40,6 +47,12 @@ sonarqube {
     property "sonar.organization", "ivanjoshua98"
     property "sonar.host.url", "https://sonarcloud.io"
   }
+}
+
+
+test {
+	useJUnitPlatform()
+	
 }
 
 tasks.named('test') {
