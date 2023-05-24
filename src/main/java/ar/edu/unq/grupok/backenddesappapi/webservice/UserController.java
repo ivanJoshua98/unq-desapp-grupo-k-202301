@@ -50,10 +50,6 @@ class UserController {
 
 		List<CryptoVolume> cryptoVolumes = user.cryptoVolumes(startDateTime, endDateTime);
 
-		List<Offer> closedOffers = user.closedOffersBetweenDates(startDateTime, endDateTime);
-		System.out.println("Closed Offers size: ");
-		System.out.println(closedOffers.size());
-
 		return ResponseEntity.ok()
 				.body(cryptoVolumes
 						.stream()
