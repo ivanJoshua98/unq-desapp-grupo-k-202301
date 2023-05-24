@@ -22,13 +22,4 @@ public class ApplicationExceptionHandler {
 		return errorMap;
 	}
 	
-	
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(EmailAlreadyUsedException.class)
-	public Map<String, String> handleBusinessException(EmailAlreadyUsedException exception){
-		Map<String, String> errorMap = new HashMap<>();
-		errorMap.put("errorMessage", exception.getMessage());
-		return errorMap;
-	}
-	
 }

@@ -1,5 +1,6 @@
 package ar.edu.unq.grupok.backenddesappapi.persistence;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,8 +11,8 @@ import ar.edu.unq.grupok.backenddesappapi.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID>{
 	
-	User findByEmail(String email);
+	Optional<User> findByEmail(String email);
 	
-	User findByName(String username);
+	Optional<User> findByName(String username);
 	
 }

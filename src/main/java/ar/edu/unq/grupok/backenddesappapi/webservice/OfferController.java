@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.edu.unq.grupok.backenddesappapi.model.AppException;
 import ar.edu.unq.grupok.backenddesappapi.model.Crypto;
-import ar.edu.unq.grupok.backenddesappapi.model.InvalidPublishedPriceException;
 import ar.edu.unq.grupok.backenddesappapi.model.Offer;
 import ar.edu.unq.grupok.backenddesappapi.model.OfferState;
 import ar.edu.unq.grupok.backenddesappapi.model.OperationType;
 import ar.edu.unq.grupok.backenddesappapi.model.User;
-import ar.edu.unq.grupok.backenddesappapi.model.UserWithoutOperationsException;
 import ar.edu.unq.grupok.backenddesappapi.service.CryptoService;
 import ar.edu.unq.grupok.backenddesappapi.service.OfferService;
 import ar.edu.unq.grupok.backenddesappapi.service.UserService;
@@ -47,7 +46,7 @@ public class OfferController {
 	
 	@Operation(summary = "Create a new offer")
 	@PostMapping("/createOffer")
-	public ResponseEntity<OfferDTO> createOffer(@RequestBody OfferDTO newOffer) throws InvalidPublishedPriceException{
+	public ResponseEntity<OfferDTO> createOffer(@RequestBody OfferDTO newOffer){
 		Crypto crypto = this.cryptoService.getCryptoBySymbol(newOffer.getCryptoSymbol());
 		User user = this.userService.getUserByEmail(newOffer.getAuthorEmail());
 		
@@ -152,7 +151,7 @@ public class OfferController {
 		openOfferDTO.setNumberOfOperations(offer.getAuthor().getSuccessfulOperations().size());
 		try {
 			openOfferDTO.setReputation(offer.getAuthor().getReputation().toString());
-		} catch (UserWithoutOperationsException e) {
+		} catch (AppException e) {
 			openOfferDTO.setReputation(e.getMessage());
 		}
 		

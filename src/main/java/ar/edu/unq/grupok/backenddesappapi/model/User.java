@@ -157,7 +157,7 @@ public class User {
 	public Integer getReputation() {
 		Integer numberOfOperations = this.successfulOperations.size(); 
 		if (numberOfOperations == 0) {
-			throw new UserWithoutOperationsException("User without operations");
+			throw new P2PException("User without operations");
 		}
 		return points / numberOfOperations;
 	}
