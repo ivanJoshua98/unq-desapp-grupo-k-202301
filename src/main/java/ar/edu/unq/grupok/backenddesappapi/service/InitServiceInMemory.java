@@ -98,7 +98,7 @@ public class InitServiceInMemory {
 		try {
 			createAndSaveOffers();
 		} catch (RuntimeException e) {
-			e.printStackTrace();
+			this.logger.warn(e.getMessage());
 		}
 	}	
 	

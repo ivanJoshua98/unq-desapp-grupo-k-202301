@@ -73,6 +73,7 @@ public class OfferController {
 									 	.map(this::convertOfferEntityToOpenOfferDTO).toList());
 	}
 
+	@Operation(summary = "A user reports making a transfer")
 	@PutMapping("/offers/transact/{id}")
     public ResponseEntity<OfferWithActionProcessedDTO> reportTransaction(@PathVariable UUID id,@RequestBody UserEmailDTO userEmail) {
         Offer offer = offerService.getOfferById(id);
@@ -87,6 +88,7 @@ public class OfferController {
         return ResponseEntity.ok(offerWithActionProcessedDTO);
     }
 	
+	@Operation(summary = "The author of the offer confirms the receipt of a transfer")
 	@PutMapping("/offers/confirm/{id}")
     public ResponseEntity<OfferWithActionProcessedDTO> confirmTransaction(@PathVariable UUID id){ 
         Offer offer = offerService.getOfferById(id);
@@ -101,6 +103,7 @@ public class OfferController {
         return ResponseEntity.ok(offerWithActionProcessedDTO);
     }
 	
+	@Operation(summary = "A user cancels an operation")
 	@PutMapping("/offers/cancel/{id}")
     public ResponseEntity<OfferWithActionProcessedDTO> cancelTransaction(@PathVariable UUID id,@RequestBody UserEmailDTO userEmail) {
         Offer offer = offerService.getOfferById(id);
