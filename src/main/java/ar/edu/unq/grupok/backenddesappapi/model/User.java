@@ -3,6 +3,7 @@ package ar.edu.unq.grupok.backenddesappapi.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -205,6 +206,44 @@ public class User {
 	
 	public void cancelOperation(Offer offer) {
 		offer.operationCancelled(this);
+	}
+
+	public List<Offer> closedOffersBetweenDates(LocalDateTime startDate, LocalDateTime endDate){
+		return this.successfulOperations.stream()
+				.filter(offer -> offer.getCreationDate().isAfter(startDate)
+								&& offer.getClosingDate().isBefore(endDate)).toList();
+	}
+
+	public List<CryptoVolume> cryptoVolumes(LocalDateTime startDate, LocalDateTime endDate) {
+		List<Offer> closedOffers = this.closedOffersBetweenDates(startDate, endDate);
+		// Cryptos symbols sin repetidos
+		List<String> cryptos = new ArrayList<String>();
+		closedOffers.forEach(offer -> {
+			String cryptoSymbol = offer.getCrypto().getSymbol();
+			if (!cryptos.contains(cryptoSymbol)) {
+				cryptos.add(cryptoSymbol);
+			}
+		});
+
+		// List of crypto volumes
+		List<CryptoVolume> cryptoVolumesList = new ArrayList<CryptoVolume>();
+		cryptos.forEach(cryptoSymbol -> {
+			CryptoVolume cryptoVolume = new CryptoVolume();
+			cryptoVolume.setCryptoSymbol(cryptoSymbol);
+			closedOffers.forEach(offer -> {
+				if (offer.getCrypto().getSymbol() == cryptoSymbol){
+					cryptoVolume.incrementTotalAmountUSD(offer.getPriceOfCrypto());
+					cryptoVolume.incrementTotalAmountPesos(offer.getAmountInPesos());
+					cryptoVolume.incrementTotalAmountOfCrypto(offer.getAmountOfCrypto());
+
+					cryptoVolume.setPriceOfCrypto(offer.getPriceOfCrypto());
+					cryptoVolume.setPriceOfCryptoInPesos(offer.getAmountInPesos());
+				}
+			});
+			cryptoVolumesList.add(cryptoVolume);
+		});
+
+		return cryptoVolumesList;
 	}
 	
 }

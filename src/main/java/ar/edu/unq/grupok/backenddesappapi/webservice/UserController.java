@@ -1,16 +1,16 @@
 package ar.edu.unq.grupok.backenddesappapi.webservice;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import ar.edu.unq.grupok.backenddesappapi.model.CryptoVolume;
+import ar.edu.unq.grupok.backenddesappapi.model.Offer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ar.edu.unq.grupok.backenddesappapi.model.User;
 import ar.edu.unq.grupok.backenddesappapi.service.UserServiceImpl;
@@ -35,7 +35,31 @@ class UserController {
 									 .stream()
 									 	.map(this::convertUserEntityToUserDTO).toList());
 	}
-	
+
+	@Operation(summary = "Get volumen of crypto operated between dates (yyyy-MM-dd HH:mm)")
+	@GetMapping("/cryptoVolume/{email}/{startDate}/{endDate}")
+	public ResponseEntity<List<CryptoVolumeDTO>> cryptoVolumeTraded(@PathVariable String email, @PathVariable String startDate, @PathVariable String endDate){
+
+		User user = userService.getUserByEmail(email);
+
+		// cast Dates to LocalDateTime
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); // Definir el patrón de formato
+		LocalDateTime startDateTime = LocalDateTime.parse(startDate, formatter);
+		System.out.println(startDateTime.toString());
+		LocalDateTime endDateTime = LocalDateTime.parse(endDate, formatter);
+
+		List<CryptoVolume> cryptoVolumes = user.cryptoVolumes(startDateTime, endDateTime);
+
+		List<Offer> closedOffers = user.closedOffersBetweenDates(startDateTime, endDateTime);
+		System.out.println("Closed Offers size: ");
+		System.out.println(closedOffers.size());
+
+		return ResponseEntity.ok()
+				.body(cryptoVolumes
+						.stream()
+						.map(this::convertCryptoVolumeEntityToCryptoVolumeDTO).toList());
+
+	}
 	
 	@Operation(summary = "Register a new user")
 	@PostMapping("/register")
@@ -62,5 +86,18 @@ class UserController {
 		userDTO.setCriptoWallet(user.getCriptoWallet());
 		return userDTO;
 	}
-	
+
+	public CryptoVolumeDTO convertCryptoVolumeEntityToCryptoVolumeDTO(CryptoVolume cryptoVolume) {
+		CryptoVolumeDTO aCryptoVolumeDTO = new CryptoVolumeDTO();
+
+		aCryptoVolumeDTO.setRequestDate(cryptoVolume.getRequestDate());
+		aCryptoVolumeDTO.setCryptoSymbol(cryptoVolume.getCryptoSymbol());
+		aCryptoVolumeDTO.setPriceOfCrypto(cryptoVolume.getPriceOfCrypto());
+		aCryptoVolumeDTO.setPriceOfCryptoInPesos(cryptoVolume.getPriceOfCryptoInPesos());
+		aCryptoVolumeDTO.setTotalAmountUSD(cryptoVolume.getTotalAmountUSD());
+		aCryptoVolumeDTO.setTotalAmountPesos(cryptoVolume.getTotalAmountPesos());
+		aCryptoVolumeDTO.setTotalAmountOfCrypto(cryptoVolume.getTotalAmountOfCrypto());
+
+		return aCryptoVolumeDTO;
+	}
 }
