@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import ar.edu.unq.grupok.backenddesappapi.model.CryptoVolume;
-import ar.edu.unq.grupok.backenddesappapi.model.Offer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +44,6 @@ class UserController {
 		// cast Dates to LocalDateTime
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); // Definir el patrón de formato
 		LocalDateTime startDateTime = LocalDateTime.parse(startDate, formatter);
-		System.out.println(startDateTime.toString());
 		LocalDateTime endDateTime = LocalDateTime.parse(endDate, formatter);
 
 		List<CryptoVolume> cryptoVolumes = user.cryptoVolumes(startDateTime, endDateTime);
