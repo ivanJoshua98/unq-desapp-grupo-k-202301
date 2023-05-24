@@ -6,7 +6,7 @@ public class CryptoVolumeDTO {
 
     private LocalDateTime requestDate;
 
-    private String CryptoSymbol;
+    private String cryptoSymbol;
 
     private Double priceOfCrypto;
 
@@ -29,11 +29,11 @@ public class CryptoVolumeDTO {
     }
 
     public String getCryptoSymbol() {
-        return CryptoSymbol;
+        return cryptoSymbol;
     }
 
     public void setCryptoSymbol(String cryptoSymbol) {
-        CryptoSymbol = cryptoSymbol;
+        this.cryptoSymbol = cryptoSymbol;
     }
 
     public Double getPriceOfCrypto() {

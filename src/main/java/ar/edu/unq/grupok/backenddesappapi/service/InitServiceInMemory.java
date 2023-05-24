@@ -99,9 +99,7 @@ public class InitServiceInMemory {
 		this.binanceProxyService.getAndSaveAllCryptos();
 		try {
 			createAndSaveOffers();
-		} catch (AppException e) {
-			e.printStackTrace();
-		} catch (P2PException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 	}	
