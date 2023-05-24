@@ -56,8 +56,8 @@ class UserUnitTests {
     }
 
     @Test
-    void testGetReputationWithoutSuccessfulOperation() throws  UserWithoutOperationsException {
-        Assertions.assertThrows(UserWithoutOperationsException.class,() -> aUser.getReputation());
+    void testGetReputationWithoutSuccessfulOperation() throws  AppException {
+        Assertions.assertThrows(P2PException.class,() -> aUser.getReputation());
     }
 
     @Test

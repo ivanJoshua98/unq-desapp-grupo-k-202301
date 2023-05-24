@@ -53,7 +53,7 @@ public class Offer {
 	}
 	
 	public Offer(Crypto crypto, Integer amountOfCrypto, Double priceOfCrypto, Integer amountInPesos, User author,
-				OperationType operationType) throws InvalidPublishedPriceException {
+				OperationType operationType) {
 		
 		super();
 		this.crypto = crypto;
@@ -62,7 +62,7 @@ public class Offer {
 		if (Boolean.TRUE.equals(priceIsValid(priceOfCrypto))) {
 			this.priceOfCrypto = priceOfCrypto;
 		} else {
-			throw new InvalidPublishedPriceException("the published price of the crypto is invalid");
+			throw new P2PException("the published price of the crypto is invalid");
 		}
 
 		this.amountInPesos = amountInPesos;
@@ -130,26 +130,26 @@ public class Offer {
 		this.tradingStartDate = tradingStartDate;
 	}
 
-	public void offerAccepted(User user, LocalDateTime tradingStartDate) throws PriceDifferenceException {
+	public void offerAccepted(User user, LocalDateTime tradingStartDate){
 		try {
 			checkOffer();
 			this.offerState = OfferState.INPROCESS;
 			this.client = user;
 			this.tradingStartDate = tradingStartDate;
-		} catch (PriceDifferenceException e) {
+		} catch (P2PException e) {
 			this.offerState = OfferState.CANCELLED;
 		}
 
 	}
 
-	private void checkOffer() throws PriceDifferenceException {
+	private void checkOffer(){
 		//BUY
 		if (operationType == OperationType.BUY && crypto.getPrice() > priceOfCrypto ) {
-			throw new PriceDifferenceException("the price of the system is higher than the price indicated by the user");
+			throw new P2PException("the price of the system is higher than the price indicated by the user");
 		}
 		//sale
 		if (operationType == OperationType.SALE && crypto.getPrice() < priceOfCrypto) {
-			throw new PriceDifferenceException("the system price is below the price indicated by the user");
+			throw new P2PException("the system price is below the price indicated by the user");
 		}
 		
 	}

@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.grupok.backenddesappapi.model.AppException;
 import ar.edu.unq.grupok.backenddesappapi.model.Crypto;
-import ar.edu.unq.grupok.backenddesappapi.model.InvalidPublishedPriceException;
 import ar.edu.unq.grupok.backenddesappapi.model.Offer;
 import ar.edu.unq.grupok.backenddesappapi.model.OperationType;
+import ar.edu.unq.grupok.backenddesappapi.model.P2PException;
 import ar.edu.unq.grupok.backenddesappapi.model.User;
 import jakarta.annotation.PostConstruct;
 
@@ -66,7 +67,7 @@ public class InitServiceInMemory {
 
 	}
 	
-	private void createAndSaveOffers() throws InvalidPublishedPriceException {
+	private void createAndSaveOffers() {
 		
 		User author = this.userService.getUserByEmail("dibumartinez@mail.com");
 		User client1 = this.userService.getUserByEmail("rodridepaul@mail.com");
@@ -97,7 +98,9 @@ public class InitServiceInMemory {
 		this.binanceProxyService.getAndSaveAllCryptos();
 		try {
 			createAndSaveOffers();
-		} catch (InvalidPublishedPriceException e) {
+		} catch (AppException e) {
+			e.printStackTrace();
+		} catch (P2PException e) {
 			e.printStackTrace();
 		}
 	}	

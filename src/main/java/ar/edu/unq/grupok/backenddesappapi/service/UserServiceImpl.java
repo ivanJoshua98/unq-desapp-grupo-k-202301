@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import ar.edu.unq.grupok.backenddesappapi.model.UserNotFoundException;
 import ar.edu.unq.grupok.backenddesappapi.persistence.UserRepository;
-import ar.edu.unq.grupok.backenddesappapi.model.EmailAlreadyUsedException;
+import ar.edu.unq.grupok.backenddesappapi.model.AppException;
 import ar.edu.unq.grupok.backenddesappapi.model.User;
 
 @Service
@@ -26,24 +25,30 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User saveUser(User user) {
 		if (Boolean.TRUE.equals(emailIsUsed(user.getEmail()))) {
-			throw new EmailAlreadyUsedException("Email: " + user.getEmail() + " is already used");
+			throw new AppException("Email: " + user.getEmail() + " is already used", HttpStatus.BAD_REQUEST);
 		}
 		return userRepository.save(user);
 	}
 
 	private Boolean emailIsUsed(String email) {
-		User user = getUserByEmail(email);
-		return user != null;
+		try {
+			User user = getUserByEmail(email);
+			return user != null;
+		}
+		catch(AppException e){
+			return false;
+		}
+		
 	}
 	
 	@Override
 	public User getUserByEmail(String email) {
-		return userRepository.findByEmail(email);
+		return userRepository.findByEmail(email).orElseThrow(() -> new AppException("User not found by email: " + email, HttpStatus.NOT_FOUND));
 	}
 
 	@Override
 	public User getUserById(UUID id) {
-		return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found by id: " + id));
+		return userRepository.findById(id).orElseThrow(() -> new AppException("User not found by id: " + id, HttpStatus.NOT_FOUND));
 	}
 
 	@Override
@@ -53,11 +58,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByUsername(String username) {
-		User user =  userRepository.findByName(username);
-		if (user == null) {
-			throw new UsernameNotFoundException("User not found by username: " + username);
-		}
-		return user;
+		return userRepository.findByName(username).orElseThrow(() -> new AppException("User not found by username: " + username, HttpStatus.NOT_FOUND));
 	}
 
 
