@@ -19,7 +19,7 @@ class OfferUnitTests {
     private User aUserMock;
 
     @BeforeEach
-    void init() throws InvalidPublishedPriceException {
+    void init() throws P2PException {
         this.aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
                 "1234567891234567891234", "12345678");
 
@@ -30,7 +30,7 @@ class OfferUnitTests {
     }
 
     @Test
-    void testConstructorAndGeters() throws InvalidPublishedPriceException {
+    void testConstructorAndGeters() throws P2PException {
         User authorUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
                 "1234567891234567891234", "12345678");
         Offer offer = new Offer(aCrypto, 50, 1.000, 400, authorUser,
@@ -48,10 +48,10 @@ class OfferUnitTests {
     }
 
     @Test
-    void testOfferConstructorInvalidPrice() throws InvalidPublishedPriceException {
-        Assertions.assertThrows(InvalidPublishedPriceException.class,() -> new Offer(aCrypto, 50, 1.051, 400, aUser,
+    void testOfferConstructorInvalidPrice() throws P2PException {
+        Assertions.assertThrows(P2PException.class,() -> new Offer(aCrypto, 50, 1.051, 400, aUser,
                 OperationType.BUY));
-        Assertions.assertThrows(InvalidPublishedPriceException.class,() -> new Offer(aCrypto, 50, 0.949, 400, aUser,
+        Assertions.assertThrows(P2PException.class,() -> new Offer(aCrypto, 50, 0.949, 400, aUser,
                 OperationType.BUY));
     }
 
@@ -68,14 +68,14 @@ class OfferUnitTests {
     }
 
     @Test
-    void testOfferAccepted() throws InvalidPublishedPriceException {
+    void testOfferAccepted() throws P2PException {
         LocalDateTime tradingStartDate = LocalDateTime.now();
         aBuyOffer.offerAccepted(aUserMock, tradingStartDate);
         Assertions.assertEquals(OfferState.INPROCESS, aBuyOffer.getOfferState());
     }
 
     @Test
-    void testOfferCancelledBySystem() {
+    void testOfferCancelledBySystem(){
         LocalDateTime tradingStartDate = LocalDateTime.now();
         Assertions.assertEquals(OperationType.BUY, aBuyOffer.getOperationType());
         aCrypto.setPrice(1.500, tradingStartDate);

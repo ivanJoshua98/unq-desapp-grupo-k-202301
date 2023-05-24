@@ -1,13 +1,13 @@
 package ar.edu.unq.grupok.backenddesappapi.model;
 
-public class EmailAlreadyUsedException extends RuntimeException {
+public class P2PException extends RuntimeException{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	public EmailAlreadyUsedException(String message) {
+
+	public P2PException(String message) {
 		super(message);
 	}
 }

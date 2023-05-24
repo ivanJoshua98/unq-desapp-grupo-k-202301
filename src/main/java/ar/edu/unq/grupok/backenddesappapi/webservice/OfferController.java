@@ -36,7 +36,7 @@ public class OfferController {
 	
 	@Operation(summary = "Create a new offer")
 	@PostMapping("/createOffer")
-	public ResponseEntity<OfferDTO> createOffer(@RequestBody OfferDTO newOffer) throws InvalidPublishedPriceException{
+	public ResponseEntity<OfferDTO> createOffer(@RequestBody OfferDTO newOffer){
 		Crypto crypto = this.cryptoService.getCryptoBySymbol(newOffer.getCryptoSymbol());
 		User user = this.userService.getUserByEmail(newOffer.getAuthorEmail());
 		
@@ -140,7 +140,7 @@ public class OfferController {
 		openOfferDTO.setNumberOfOperations(offer.getAuthor().getSuccessfulOperations().size());
 		try {
 			openOfferDTO.setReputation(offer.getAuthor().getReputation().toString());
-		} catch (UserWithoutOperationsException e) {
+		} catch (AppException e) {
 			openOfferDTO.setReputation(e.getMessage());
 		}
 		
