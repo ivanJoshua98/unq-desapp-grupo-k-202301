@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.unq.grupok.backenddesappapi.model.AppException;
 import ar.edu.unq.grupok.backenddesappapi.model.Crypto;
 import ar.edu.unq.grupok.backenddesappapi.model.Offer;
 import ar.edu.unq.grupok.backenddesappapi.model.OperationType;
-import ar.edu.unq.grupok.backenddesappapi.model.P2PException;
 import ar.edu.unq.grupok.backenddesappapi.model.User;
 import jakarta.annotation.PostConstruct;
 
