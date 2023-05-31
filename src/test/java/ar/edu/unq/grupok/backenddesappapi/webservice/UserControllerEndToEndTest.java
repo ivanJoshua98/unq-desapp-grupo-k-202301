@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import ar.edu.unq.grupok.backenddesappapi.model.User;
 import jakarta.transaction.Transactional;
 
-/*@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Transactional
 public class UserControllerEndToEndTest {
 
@@ -166,4 +166,4 @@ public class UserControllerEndToEndTest {
 		
 	}
 	
-}*/
+}

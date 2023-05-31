@@ -29,11 +29,11 @@ public class ExceptionHandlerAspectCustomPointcut {
 			return joinPoint.proceed();
 		} 
 		catch (AppException e) {
-			log.info("/////// ExceptionHandlerAspectCustomPointcut - AROUND POINTCUT - Exception caught: AppException ///////");
+			log.error("/////// ExceptionHandlerAspectCustomPointcut - AROUND POINTCUT - Exception caught: AppException ///////", e);
 			return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
 		}
 		catch (P2PException e) {
-			log.info("/////// ExceptionHandlerAspectCustomPointcut - AROUND POINTCUT - Exception caught: P2PException ///////");
+			log.error("/////// ExceptionHandlerAspectCustomPointcut - AROUND POINTCUT - Exception caught: P2PException ///////", e);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
