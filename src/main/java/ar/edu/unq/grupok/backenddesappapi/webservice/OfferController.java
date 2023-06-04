@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import ar.edu.unq.grupok.backenddesappapi.service.CryptoService;
 import ar.edu.unq.grupok.backenddesappapi.service.OfferService;
 import ar.edu.unq.grupok.backenddesappapi.service.UserService;
+import ar.edu.unq.grupok.backenddesappapi.webservice.dto.OfferDTO;
+import ar.edu.unq.grupok.backenddesappapi.webservice.dto.OfferWithActionProcessedDTO;
+import ar.edu.unq.grupok.backenddesappapi.webservice.dto.OpenOfferDTO;
+import ar.edu.unq.grupok.backenddesappapi.webservice.dto.UserEmailDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import ar.edu.unq.grupok.backenddesappapi.model.User;
 import ar.edu.unq.grupok.backenddesappapi.service.UserServiceImpl;
+import ar.edu.unq.grupok.backenddesappapi.webservice.dto.CryptoVolumeDTO;
+import ar.edu.unq.grupok.backenddesappapi.webservice.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
