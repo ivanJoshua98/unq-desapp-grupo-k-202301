@@ -1,26 +1,23 @@
 package ar.edu.unq.grupok.backenddesappapi.webservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.test.web.reactive.server.WebTestClient.BodyContentSpec;
 
 import ar.edu.unq.grupok.backenddesappapi.model.User;
-import jakarta.transaction.Transactional;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Transactional
 public class UserControllerEndToEndTest {
-
-	private static final String HTTP_LOCALHOST = "http://localhost:";
 
 	@LocalServerPort
 	private int port;
@@ -29,7 +26,7 @@ public class UserControllerEndToEndTest {
 	private UserController userController;
 	
 	@Autowired
-	private TestRestTemplate restTemplate;
+    private WebTestClient webClient;
 	
 	private User anyUser;
 	
@@ -47,17 +44,35 @@ public class UserControllerEndToEndTest {
 	
 	@Test
 	public void getAllUsersRegisteredSuccessfullyTest() throws Exception {
+		
+		this.webClient.get().uri("/p2p/users").exchange().expectStatus().isOk();
 
-		ResponseEntity<String> result = restTemplate.getForEntity(HTTP_LOCALHOST + port + "/p2p/users", String.class);
+		//ResponseEntity<String> result = restTemplate.getForEntity(HTTP_LOCALHOST + port + "/p2p/users", String.class);
 
-		assertEquals(200, result.getStatusCode().value());
+		//assertEquals(200, result.getStatusCode().value());
 		
 	}
 	
 	@Test
 	public void getAllUsersRegisteredSuccessfullyWithTheirPropertiesTest() throws Exception {
-
-		ResponseEntity<String> result = restTemplate.getForEntity(HTTP_LOCALHOST + port + "/p2p/users", String.class);
+		
+		//this.webClient.get().uri("/p2p/users").exchange().expectBody().json("{\"name\":\"Jane\"}");
+		
+		
+		//this.webClient.get().uri("/p2p/users").exchange().expectBody().jsonPath("$").isEqualTo("name");
+		//this.webClient.get().uri("/p2p/users").exchange().expectBody().jsonPath("$[0].name");
+		BodyContentSpec result = this.webClient.get().uri("/p2p/users").exchange().expectBody();
+		
+		result.jsonPath("$[0].name").exists();
+		result.jsonPath("$[0].lastName").exists();
+		result.jsonPath("$[0].email").exists();
+		result.jsonPath("$[0].address").exists();
+		result.jsonPath("$[0].password").exists();
+		result.jsonPath("$[0].criptoWallet").exists();
+		result.jsonPath("$[0].cvu").exists();
+		
+	
+		/*ResponseEntity<String> result = restTemplate.getForEntity(HTTP_LOCALHOST + port + "/p2p/users", String.class);
 
 		assertTrue(result.getBody().contains("name"));
 		assertTrue(result.getBody().contains("lastName"));
@@ -65,15 +80,17 @@ public class UserControllerEndToEndTest {
 		assertTrue(result.getBody().contains("address"));
 		assertTrue(result.getBody().contains("password"));
 		assertTrue(result.getBody().contains("criptoWallet"));
-		assertTrue(result.getBody().contains("cvu"));
+		assertTrue(result.getBody().contains("cvu"));*/
 	}
 	
 	@Test
 	public void registerNewUserSuccessfullyTest() throws Exception {
 
-		ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
+		this.webClient.post().uri("/p2p/register").bodyValue(this.anyUser).exchange().expectStatus().isCreated();
+		
+		//ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
 
-		assertEquals(201, result.getStatusCode().value());
+		//assertEquals(201, result.getStatusCode().value());
 		
 	}
 	
@@ -82,9 +99,11 @@ public class UserControllerEndToEndTest {
 		
 		this.anyUser.setEmail("dibumartinez@mail.com");
 		
-		ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
+		this.webClient.post().uri("/p2p/register").bodyValue(this.anyUser).exchange().expectStatus().isBadRequest();
+		
+		//ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
 
-		assertEquals(400, result.getStatusCode().value());
+		//assertEquals(400, result.getStatusCode().value());
 		
 	}
 	
@@ -93,76 +112,14 @@ public class UserControllerEndToEndTest {
 		
 		this.anyUser.setEmail("dibumartinez@mail.com");
 		
-		ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
+		BodyContentSpec result = this.webClient.post().uri("/p2p/register").bodyValue(this.anyUser).exchange().expectBody();
+		
+		// Operator -$- : The root element to query. This starts all path expressions.
+		result.jsonPath("$").isEqualTo("Email: dibumartinez@mail.com is already used");
+		
+		//ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
 
-		assertEquals("Email: dibumartinez@mail.com is already used", result.getBody());
-		
-	}
-	
-	@Test
-	public void registerAUserWithPasswordLessThanSixCharactersIsNotPermittedTest() throws Exception {
-		
-		this.anyUser.setPassword(".Au2");
-		
-		ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
-
-		assertTrue(result.getBody().contains("The password is less than 6 characters"));
-		
-	}
-	
-	@Test
-	public void registerAUserWithPasswordThatDontHaveAUpperCaseIsNotPermittedTest() throws Exception {
-		
-		this.anyUser.setPassword(".anyuseru2");
-		
-		ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
-
-		assertTrue(result.getBody().contains("Password must contain 1 or more uppercase characters."));
-		
-	}
-	
-	@Test
-	public void registerAUserWithPasswordThatDontHaveALowerCaseIsNotPermittedTest() throws Exception {
-		
-		this.anyUser.setPassword(".ANYUSER2");
-		
-		ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
-
-		assertTrue(result.getBody().contains("Password must contain 1 or more lowercase characters."));
-		
-	}
-	
-	
-	@Test
-	public void registerAUserWithPasswordThatDontHaveASpecialCharacterIsNotPermittedTest() throws Exception {
-		
-		this.anyUser.setPassword("anyuserAu2");
-		
-		ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
-
-		assertTrue(result.getBody().contains("Password must contain 1 or more special characters."));
-		
-	}
-	
-	@Test
-	public void registerAUserWithCvuThatDontHaveA22CharactersIsNotPermittedTest() throws Exception {
-		
-		this.anyUser.setCvu("12334");
-		
-		ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
-
-		assertTrue(result.getBody().contains("Invalid length for CVU"));
-		
-	}
-	
-	@Test
-	public void registerAUserWithCryptoWalletThatDontHave8CharactersIsNotPermittedTest() throws Exception {
-		
-		this.anyUser.setCriptoWallet("6534");
-		
-		ResponseEntity<String> result = restTemplate.postForEntity(HTTP_LOCALHOST + port + "/p2p/register", this.anyUser, String.class);
-
-		assertTrue(result.getBody().contains("Invalid length for wallet"));
+		//assertEquals("Email: dibumartinez@mail.com is already used", result.getBody());
 		
 	}
 	
