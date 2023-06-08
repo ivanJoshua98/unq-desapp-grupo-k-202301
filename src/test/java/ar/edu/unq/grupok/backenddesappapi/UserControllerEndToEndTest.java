@@ -1,4 +1,4 @@
-package ar.edu.unq.grupok.backenddesappapi.webservice;
+package ar.edu.unq.grupok.backenddesappapi;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,6 +14,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.reactive.server.WebTestClient.BodyContentSpec;
 
 import ar.edu.unq.grupok.backenddesappapi.model.User;
+import ar.edu.unq.grupok.backenddesappapi.webservice.UserController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

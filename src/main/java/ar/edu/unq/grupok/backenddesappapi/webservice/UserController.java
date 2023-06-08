@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 @RestController
 @Transactional
 @RequestMapping("/p2p")
-class UserController {
+public class UserController {
 
 	@Autowired
 	private UserServiceImpl userService;
