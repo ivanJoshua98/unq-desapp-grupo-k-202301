@@ -1,4 +1,4 @@
-package ar.edu.unq.grupok.backenddesappapi.webservice;
+package ar.edu.unq.grupok.backenddesappapi.webservice.dto;
 
 public class UserEmailDTO {
 
