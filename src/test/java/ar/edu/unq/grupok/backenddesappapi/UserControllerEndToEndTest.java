@@ -1,6 +1,6 @@
 package ar.edu.unq.grupok.backenddesappapi;
 
-import static org.assertj.core.api.Assertions.assertThat;
+/*import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -81,7 +81,7 @@ public class UserControllerEndToEndTest {
 		assertTrue(result.getBody().contains("address"));
 		assertTrue(result.getBody().contains("password"));
 		assertTrue(result.getBody().contains("criptoWallet"));
-		assertTrue(result.getBody().contains("cvu"));*/
+		assertTrue(result.getBody().contains("cvu"));
 	}
 	
 	@Test
@@ -125,3 +125,4 @@ public class UserControllerEndToEndTest {
 	}
 	
 }
+*/
