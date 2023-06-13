@@ -57,8 +57,6 @@ test {
 	
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+
 
 
