@@ -1,4 +1,4 @@
-package ar.edu.unq.grupok.backenddesappapi.webservice.dto;
+package ar.edu.unq.grupok.backenddesappapi.dto;
 
 
 import ar.edu.unq.grupok.backenddesappapi.model.OfferState;

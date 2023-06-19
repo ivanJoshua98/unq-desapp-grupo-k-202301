@@ -1,6 +1,5 @@
-package modelTests;
+package ar.edu.unq.grupok.backenddesappapi.model;
 
-import ar.edu.unq.grupok.backenddesappapi.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
