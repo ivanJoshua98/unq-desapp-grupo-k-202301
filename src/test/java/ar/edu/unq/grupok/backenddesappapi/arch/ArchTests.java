@@ -28,11 +28,43 @@ public class ArchTests {
                 .should().haveSimpleNameEndingWith("Repository").check(baseClasses);
     }
 
-//    @Test
-//    void webserviceClassesShouldEndWithController(){
-//        classes().that().resideInAPackage("..webservice..")
-//                .should().haveSimpleNameEndingWith("Controller").check(baseClasses);
-//    }
+    @Test
+    void webserviceClassesShouldEndWithController(){
+        classes().that().resideInAPackage("..webservice..")
+                .should().haveSimpleNameEndingWith("Controller").check(baseClasses);
+    }
 
+    @Test
+    void serviceClassesShouldEndWithServiceOrServiceImp(){
+        classes().that().resideInAPackage("..service..")
+                .should().haveSimpleNameEndingWith("Service").orShould().haveSimpleNameEndingWith("ServiceImp");
+    }
+
+
+    @Test
+    void dtoClassesShouldEndWithDTO(){
+        classes().that().resideInAPackage("..dto..")
+                .should().haveSimpleNameEndingWith("DTO").check(baseClasses);
+    }
+
+    @Test
+    void layeredArchitectureShouldBeRespected(){
+        layeredArchitecture()
+                .consideringAllDependencies()
+                .layer("Controller").definedBy("..webservice..")
+                .layer("Service").definedBy("..service..")
+                .layer("Persistence").definedBy("..persistence..")
+
+                .whereLayer("Controller").mayNotBeAccessedByAnyLayer()
+                .whereLayer("Service").mayOnlyBeAccessedByLayers("Controller")
+                .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Service");
+    }
+
+    @Test
+    void controllerClassesShouldHaveSpringControllerAnnotation() {
+        classes().that().resideInAPackage("..webservice..")
+                .should().beAnnotatedWith("org.springframework.web.bind.annotation.RestController")
+                .check(baseClasses);
+    }
 
 }
