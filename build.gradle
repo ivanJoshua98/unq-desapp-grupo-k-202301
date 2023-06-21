@@ -12,6 +12,9 @@ sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
+	maven {
+		url 'https://repo1.maven.org/maven2/jakarta/enterprise/'
+	}
 }
 
 dependencies {
@@ -33,7 +36,10 @@ dependencies {
 	implementation "org.assertj:assertj-core:2.9.1"
 	
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.1.0'
-	
+
+	implementation 'org.springframework.boot:spring-boot-starter-cache:3.1.0'
+	implementation 'org.ehcache:ehcache:3.10.6'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	
