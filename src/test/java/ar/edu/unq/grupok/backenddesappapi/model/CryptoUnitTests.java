@@ -1,11 +1,9 @@
-package modelTests;
-import ar.edu.unq.grupok.backenddesappapi.model.Crypto;
+package ar.edu.unq.grupok.backenddesappapi.model;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
+
 class CryptoUnitTests {
     private Crypto aRandomCrypto = anyCrypto();
     private Crypto anyCrypto() {
