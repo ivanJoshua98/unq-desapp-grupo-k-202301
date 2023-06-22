@@ -10,16 +10,16 @@ import java.time.LocalDateTime;
 
 class OfferUnitTests {
 
-    private User aUser;
+    private UserModel aUser;
     private Crypto aCrypto;
     private Offer aBuyOffer;
 
     @Mock
-    private User aUserMock;
+    private UserModel aUserMock;
 
     @BeforeEach
     void init() throws P2PException {
-        this.aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
+        this.aUser = new UserModel("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
                 "1234567891234567891234", "12345678");
 
         this.aCrypto = new Crypto("ALICEUSDT", 1.000);
@@ -30,7 +30,7 @@ class OfferUnitTests {
 
     @Test
     void testConstructorAndGeters() throws P2PException {
-        User authorUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
+        UserModel authorUser = new UserModel("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
                 "1234567891234567891234", "12345678");
         Offer offer = new Offer(aCrypto, 50, 1.000, 400, authorUser,
                 OperationType.BUY);

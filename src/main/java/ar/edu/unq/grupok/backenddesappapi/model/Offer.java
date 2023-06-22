@@ -28,7 +28,7 @@ public class Offer {
 	@JoinTable(name = "offer's_author",
 	            joinColumns = @JoinColumn(name = "user_id"),
 	            inverseJoinColumns = @JoinColumn(name = "offer_id"))
-	private User author;
+	private UserModel author;
 	
 	private OperationType operationType;
 	
@@ -38,7 +38,7 @@ public class Offer {
 	@JoinTable(name = "client's_author",
 	            joinColumns = @JoinColumn(name = "user_id"),
 	            inverseJoinColumns = @JoinColumn(name = "offer_id"))
-	private User client;
+	private UserModel client;
 	
 	@Basic
 	private LocalDateTime creationDate; 
@@ -55,7 +55,7 @@ public class Offer {
 		this.creationDate = LocalDateTime.now();
 	}
 	
-	public Offer(Crypto crypto, Integer amountOfCrypto, Double priceOfCrypto, Integer amountInPesos, User author,
+	public Offer(Crypto crypto, Integer amountOfCrypto, Double priceOfCrypto, Integer amountInPesos, UserModel author,
 				OperationType operationType) {
 		
 		super();
@@ -102,11 +102,11 @@ public class Offer {
 	}
 
 
-	public User getAuthor() {
+	public UserModel getAuthor() {
 		return author;
 	}
 	
-	public User getClient() {
+	public UserModel getClient() {
 		return client;
 	}
 	
@@ -139,7 +139,7 @@ public class Offer {
 		this.tradingStartDate = tradingStartDate;
 	}
 
-	public void offerAccepted(User user, LocalDateTime tradingStartDate){
+	public void offerAccepted(UserModel user, LocalDateTime tradingStartDate){
 		try {
 			checkOffer();
 			this.offerState = OfferState.INPROCESS;
@@ -176,7 +176,7 @@ public class Offer {
 	}
 
 
-	public void operationCancelled(User user) {
+	public void operationCancelled(UserModel user) {
 		this.offerState = OfferState.OPEN;
 		user.decreaseReputation();
 	}

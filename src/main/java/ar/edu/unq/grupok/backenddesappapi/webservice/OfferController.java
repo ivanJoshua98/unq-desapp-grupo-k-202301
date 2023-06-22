@@ -41,7 +41,7 @@ public class OfferController {
 	@PostMapping("/createOffer")
 	public ResponseEntity<OfferDTO> createOffer(@RequestBody OfferDTO newOffer){
 		Crypto crypto = this.cryptoService.getCryptoBySymbol(newOffer.getCryptoSymbol());
-		User user = this.userService.getUserByEmail(newOffer.getAuthorEmail());
+		UserModel user = this.userService.getUserByEmail(newOffer.getAuthorEmail());
 		
 		Offer offer = new Offer(crypto,
 								newOffer.getAmountOfCrypto(),
@@ -68,7 +68,7 @@ public class OfferController {
 	@GetMapping("/open-offers/{email}")
 	public ResponseEntity<List<OpenOfferDTO>> openOffersFromAUser(@PathVariable String email){
 		
-		User user = userService.getUserByEmail(email);
+		UserModel user = userService.getUserByEmail(email);
 		List<Offer> openOffers = user.getOffers().stream().filter(offer -> offer.getOfferState() == OfferState.OPEN).toList();
 		
 		return ResponseEntity.ok()
@@ -81,7 +81,7 @@ public class OfferController {
 	@PutMapping("/offers/transact/{id}")
     public ResponseEntity<OfferWithActionProcessedDTO> reportTransaction(@PathVariable UUID id,@RequestBody UserEmailDTO userEmail) {
         Offer offer = offerService.getOfferById(id);
-		User user = userService.getUserByEmail(userEmail.getUserEmail());
+		UserModel user = userService.getUserByEmail(userEmail.getUserEmail());
 		
 		user.reportTransaction(offer, LocalDateTime.now());
 
@@ -96,7 +96,7 @@ public class OfferController {
 	@PutMapping("/offers/confirm/{id}")
     public ResponseEntity<OfferWithActionProcessedDTO> confirmTransaction(@PathVariable UUID id){ 
         Offer offer = offerService.getOfferById(id);
-		User user = userService.getUserByEmail(offer.getAuthor().getEmail());
+		UserModel user = userService.getUserByEmail(offer.getAuthor().getEmail());
 		
 		user.confirmTransferReceived(offer, LocalDateTime.now());
 
@@ -111,7 +111,7 @@ public class OfferController {
 	@PutMapping("/offers/cancel/{id}")
     public ResponseEntity<OfferWithActionProcessedDTO> cancelTransaction(@PathVariable UUID id,@RequestBody UserEmailDTO userEmail) {
         Offer offer = offerService.getOfferById(id);
-		User user = userService.getUserByEmail(userEmail.getUserEmail() );
+		UserModel user = userService.getUserByEmail(userEmail.getUserEmail() );
 		
 		user.cancelOperation(offer);
 
