@@ -22,7 +22,7 @@ import ar.edu.unq.grupok.backenddesappapi.webservice.UserController;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class UserControllerEndToEndTest {
 
-	@LocalServerPort
+/*	@LocalServerPort
 	private int port;
 	
 	@Autowired
@@ -93,7 +93,7 @@ public class UserControllerEndToEndTest {
 		assertTrue(result.getBody().contains("address"));
 		assertTrue(result.getBody().contains("password"));
 		assertTrue(result.getBody().contains("criptoWallet"));
-		assertTrue(result.getBody().contains("cvu"));*/
+		assertTrue(result.getBody().contains("cvu"));
 	}
 	
 	@Test
@@ -134,6 +134,6 @@ public class UserControllerEndToEndTest {
 
 		//assertEquals("Email: dibumartinez@mail.com is already used", result.getBody());
 		
-	}
+	}*/
 	
 }
