@@ -1,6 +1,6 @@
 package ar.edu.unq.grupok.backenddesappapi;
 
-/*import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,18 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.reactive.server.WebTestClient.BodyContentSpec;
 
-import ar.edu.unq.grupok.backenddesappapi.model.User;
+import ar.edu.unq.grupok.backenddesappapi.model.UserModel;
+import ar.edu.unq.grupok.backenddesappapi.service.JWTProvider;
 import ar.edu.unq.grupok.backenddesappapi.webservice.UserController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class UserControllerEndToEndTest {
 
-	@LocalServerPort
+/*	@LocalServerPort
 	private int port;
 	
 	@Autowired
@@ -29,14 +31,24 @@ public class UserControllerEndToEndTest {
 	@Autowired
     private WebTestClient webClient;
 	
-	private User anyUser;
+	@Autowired
+	private JWTProvider jwtProvider;
 	
+	private UserModel anyUser;
+	
+	private String token;
+	
+	//private UserLoginDTO login;
 
     @BeforeEach
     public void init() {
-    	this.anyUser = new User("Lautaro", "Martinez", "toro@mail.com", "Bahia Blanca, Argentina", ".18Diciembre22",
+    	this.anyUser = new UserModel("Lautaro", "Martinez", "toro@mail.com", "Bahia Blanca, Argentina", ".18Diciembre22",
 				"1220280347448058375927", "43072034");
+    	
+    	this.token = this.jwtProvider.generateToken(
+                new UsernamePasswordAuthenticationToken("dibumartinez@mail.com", "18Dic2022"));
     }
+    
 	
 	@Test
 	public void contextLoads() throws Exception {
@@ -46,7 +58,7 @@ public class UserControllerEndToEndTest {
 	@Test
 	public void getAllUsersRegisteredSuccessfullyTest() throws Exception {
 		
-		this.webClient.get().uri("/p2p/users").exchange().expectStatus().isOk();
+		this.webClient.get().uri("/p2p/users").headers(http -> http.setBearerAuth(token)).exchange().expectStatus().isOk();
 
 		//ResponseEntity<String> result = restTemplate.getForEntity(HTTP_LOCALHOST + port + "/p2p/users", String.class);
 
@@ -59,10 +71,10 @@ public class UserControllerEndToEndTest {
 		
 		//this.webClient.get().uri("/p2p/users").exchange().expectBody().json("{\"name\":\"Jane\"}");
 		
-		
 		//this.webClient.get().uri("/p2p/users").exchange().expectBody().jsonPath("$").isEqualTo("name");
 		//this.webClient.get().uri("/p2p/users").exchange().expectBody().jsonPath("$[0].name");
-		BodyContentSpec result = this.webClient.get().uri("/p2p/users").exchange().expectBody();
+		
+		BodyContentSpec result = this.webClient.get().uri("/p2p/users").headers(http -> http.setBearerAuth(token)).exchange().expectBody();
 		
 		result.jsonPath("$[0].name").exists();
 		result.jsonPath("$[0].lastName").exists();
@@ -122,7 +134,6 @@ public class UserControllerEndToEndTest {
 
 		//assertEquals("Email: dibumartinez@mail.com is already used", result.getBody());
 		
-	}
+	}*/
 	
 }
-*/

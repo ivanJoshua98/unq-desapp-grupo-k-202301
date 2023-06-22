@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserUnitTests {
-    private User aUser;
+    private UserModel aUser;
 
     @Mock
     Offer aOfferMock;
@@ -27,13 +27,13 @@ class UserUnitTests {
 
     @BeforeEach
     void init(){
-        this.aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
+        this.aUser = new UserModel("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
                 "1234567891234567891234", "12345678");
     }
 
     @Test
     void createUserAndCheckConstructor() {
-        User aUser = new User("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
+        UserModel aUser = new UserModel("John", "Doe", "johndoe@example.com", "123 Main St", "Password!123",
                 "1234567891234567891234", "12345678");
 
         Assertions.assertEquals("John", aUser.getName());

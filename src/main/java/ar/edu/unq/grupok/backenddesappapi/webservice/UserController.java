@@ -5,16 +5,27 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import ar.edu.unq.grupok.backenddesappapi.model.CryptoVolume;
+import ar.edu.unq.grupok.backenddesappapi.model.Role;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import ar.edu.unq.grupok.backenddesappapi.model.User;
-import ar.edu.unq.grupok.backenddesappapi.service.UserServiceImpl;
+import ar.edu.unq.grupok.backenddesappapi.model.UserModel;
+import ar.edu.unq.grupok.backenddesappapi.service.JWTProvider;
+import ar.edu.unq.grupok.backenddesappapi.service.RoleService;
+import ar.edu.unq.grupok.backenddesappapi.service.UserService;
 import ar.edu.unq.grupok.backenddesappapi.dto.CryptoVolumeDTO;
 import ar.edu.unq.grupok.backenddesappapi.dto.UserDTO;
+import ar.edu.unq.grupok.backenddesappapi.dto.UserLoginDTO;
+import ar.edu.unq.grupok.backenddesappapi.dto.TokenDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -26,7 +37,16 @@ import jakarta.validation.Valid;
 public class UserController {
 
 	@Autowired
-	private UserServiceImpl userService;
+	private UserService userService;
+	
+	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
+	private JWTProvider jwtProvider;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
 	
 	@Operation(summary = "Get all registered users")
 	@GetMapping("/users")
@@ -41,7 +61,7 @@ public class UserController {
 	@GetMapping("/cryptoVolume/{email}/{startDate}/{endDate}")
 	public ResponseEntity<List<CryptoVolumeDTO>> cryptoVolumeTraded(@PathVariable String email, @PathVariable String startDate, @PathVariable String endDate){
 
-		User user = userService.getUserByEmail(email);
+		UserModel user = userService.getUserByEmail(email);
 
 		// cast Dates to LocalDateTime
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); // Definir el patrón de formato
@@ -59,19 +79,43 @@ public class UserController {
 	
 	@Operation(summary = "Register a new user")
 	@PostMapping("/register")
-	public ResponseEntity<User> registerUser(@Valid @RequestBody UserDTO newUser){
-		User user = new User(newUser.getName(), 
+	public ResponseEntity<UserModel> registerUser(@Valid @RequestBody UserDTO newUser){
+		UserModel user = new UserModel(newUser.getName(), 
 							 newUser.getLastName(),
 							 newUser.getEmail(),
 							 newUser.getAddress(),
 							 newUser.getPassword(), 
 							 newUser.getCvu(),
 							 newUser.getCriptoWallet());
+		Role role = this.roleService.getByName("USER");
+		user.addRole(role);
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(user));
 	}
 
+	@Operation(summary = "Login a user")
+	@PostMapping("/login")
+	public ResponseEntity<UserDTO> loginUser(@Valid @RequestBody UserLoginDTO request){
+		
+		UserModel user = userService.getUserByEmail(request.getUserEmail());
+		
+		Authentication authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+				request.getUserEmail(), 
+				request.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		String token = this.jwtProvider.generateToken(authentication);
+		TokenDTO tokenInfo = new TokenDTO(token);
+		
+		return ResponseEntity.ok()
+                .header(
+                    HttpHeaders.AUTHORIZATION,
+                    tokenInfo.getJwtToken()
+                )
+                .body(convertUserEntityToUserDTO(user));
+	}
 	
-	private UserDTO convertUserEntityToUserDTO(User user) {
+	
+	private UserDTO convertUserEntityToUserDTO(UserModel user) {
 		UserDTO userDTO = new UserDTO();
 		userDTO.setName(user.getName());
 		userDTO.setLastName(user.getLastName());

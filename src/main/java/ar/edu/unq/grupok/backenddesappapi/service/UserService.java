@@ -3,20 +3,18 @@ package ar.edu.unq.grupok.backenddesappapi.service;
 import java.util.List;
 import java.util.UUID;
 
-import ar.edu.unq.grupok.backenddesappapi.model.User;
+import ar.edu.unq.grupok.backenddesappapi.model.UserModel;
 
 public interface UserService {
 	
-    List<User> registeredUsers();
+    List<UserModel> registeredUsers();
     
-    User saveUser(User user);
+    UserModel saveUser(UserModel user);
     
-    User getUserById(UUID id);
+    UserModel getUserById(UUID id);
     
     void deleteUserById(UUID id);
-    
-    User getUserByUsername(String username);
 	
-    User getUserByEmail(String email);
+    UserModel getUserByEmail(String email);
 
 }
