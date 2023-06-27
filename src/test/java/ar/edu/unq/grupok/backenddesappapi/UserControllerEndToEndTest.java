@@ -15,7 +15,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.reactive.server.WebTestClient.BodyContentSpec;
 
 import ar.edu.unq.grupok.backenddesappapi.model.UserModel;
-import ar.edu.unq.grupok.backenddesappapi.service.JWTProvider;
+import ar.edu.unq.grupok.backenddesappapi.security.JWTProvider;
 import ar.edu.unq.grupok.backenddesappapi.webservice.UserController;
 
 @RunWith(SpringRunner.class)

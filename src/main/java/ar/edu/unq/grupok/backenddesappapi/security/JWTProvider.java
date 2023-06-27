@@ -1,4 +1,4 @@
-package ar.edu.unq.grupok.backenddesappapi.service;
+package ar.edu.unq.grupok.backenddesappapi.security;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
