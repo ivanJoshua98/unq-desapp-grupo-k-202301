@@ -10,7 +10,6 @@ public enum CryptoEnum {
     NEOUSDT,
     DOTUSDT,
     ETHUSDT,
-    CAKEUSDT,
     BTCUSDT,
     BNBUSDT,
     ADAUSDT,
