@@ -30,11 +30,17 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import java.time.Duration;
+
 @Tag(name = "User services", description = "Manage users of the application")
 @RestController
 @Transactional
 @RequestMapping("/p2p")
 public class UserController {
+
+	private static final Logger logger = LogManager.getLogger(UserController.class);
 
 	@Autowired
 	private UserService userService;
@@ -95,7 +101,10 @@ public class UserController {
 	@Operation(summary = "Login a user")
 	@PostMapping("/login")
 	public ResponseEntity<UserDTO> loginUser(@Valid @RequestBody UserLoginDTO request){
-		
+
+		// Audit
+		LocalDateTime startTime = LocalDateTime.now();
+
 		UserModel user = userService.getUserByEmail(request.getUserEmail());
 		
 		Authentication authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -105,6 +114,14 @@ public class UserController {
 		
 		String token = this.jwtProvider.generateToken(authentication);
 		TokenDTO tokenInfo = new TokenDTO(token);
+
+		// Audit
+		Duration executionTime = Duration.between(startTime, LocalDateTime.now());
+		logger.info(" -Auditing- " + startTime +
+				" - User Email: " + user.getEmail() + " - Operation method: " + "/login" +
+				" - Parameters: " + request.getUserEmail() + ", " + request.getPassword() +
+				" - Execution time: " + executionTime.toString());
+		//
 		
 		return ResponseEntity.ok()
                 .header(
