@@ -37,7 +37,7 @@ public class ArchTests {
     @Test
     void serviceClassesShouldEndWithServiceOrServiceImp(){
         classes().that().resideInAPackage("..service..")
-                .should().haveSimpleNameEndingWith("Service").orShould().haveSimpleNameEndingWith("ServiceImp");
+                .should().haveSimpleNameEndingWith("Service").orShould().haveSimpleNameEndingWith("ServiceImpl").check(baseClasses);
     }
 
 

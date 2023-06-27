@@ -18,7 +18,7 @@ import jakarta.annotation.PostConstruct;
 
 @Service
 @Transactional
-public class InitServiceInMemory {
+public class InitInMemoryService {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 

@@ -1,4 +1,4 @@
-package ar.edu.unq.grupok.backenddesappapi.service;
+package ar.edu.unq.grupok.backenddesappapi.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -45,7 +45,7 @@ public class SecurityConfig {
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeHttpRequests()
-			.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/p2p/login", "/p2p/register").permitAll()
+			.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/p2p/login", "/p2p/register", "/h2-console/**").permitAll()
 			.anyRequest().authenticated();
 		http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 		return http.build();

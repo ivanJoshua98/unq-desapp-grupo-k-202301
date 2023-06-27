@@ -1,4 +1,4 @@
-package ar.edu.unq.grupok.backenddesappapi.service;
+package ar.edu.unq.grupok.backenddesappapi.security;
 
 import java.util.Collection;
 import java.util.List;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unq.grupok.backenddesappapi.model.Role;
 import ar.edu.unq.grupok.backenddesappapi.model.UserModel;
+import ar.edu.unq.grupok.backenddesappapi.service.UserService;
 
 @Service
 public class CustomUsersDetailsService implements UserDetailsService {

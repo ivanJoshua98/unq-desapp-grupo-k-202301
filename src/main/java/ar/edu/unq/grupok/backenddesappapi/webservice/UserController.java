@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import ar.edu.unq.grupok.backenddesappapi.model.UserModel;
-import ar.edu.unq.grupok.backenddesappapi.service.JWTProvider;
+import ar.edu.unq.grupok.backenddesappapi.security.JWTProvider;
 import ar.edu.unq.grupok.backenddesappapi.service.RoleService;
 import ar.edu.unq.grupok.backenddesappapi.service.UserService;
 import ar.edu.unq.grupok.backenddesappapi.dto.CryptoVolumeDTO;
