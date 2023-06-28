@@ -23,7 +23,7 @@ import jakarta.transaction.Transactional;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Transactional
-public class CyptoControllerEndToEnd {
+class CyptoControllerEndToEndTest {
 
 	private static final String URL_DEPLOY = "https://unq-desapp-grupo-k-202301-production.up.railway.app";
 
@@ -58,12 +58,12 @@ public class CyptoControllerEndToEnd {
 	    }
 	
 	@Test
-	public void contextLoads() throws Exception {
+	void contextLoads() throws Exception {
 		assertThat(this.cryptoController).isNotNull();
 	}
 	
 	@Test
-	public void getAllCryptocurrenciesSuccessfullyTest() throws Exception {
+	void getAllCryptocurrenciesSuccessfullyTest() throws Exception {
 		
 		ResponseEntity<String> result = restTemplate.exchange(URL_DEPLOY + "/p2p/getCrypoValue/all", HttpMethod.GET, request, String.class);
 
@@ -71,7 +71,7 @@ public class CyptoControllerEndToEnd {
 	}
 	
 	@Test
-	public void getASpecificCryptocurrenciesSuccessfullyTest() throws Exception {
+	void getASpecificCryptocurrenciesSuccessfullyTest() throws Exception {
 		
 		ResponseEntity<String> result = restTemplate.exchange(URL_DEPLOY + "/p2p/getCryptoValue/" + this.anyCryptoSymbol, HttpMethod.GET, request, String.class);
 
@@ -79,7 +79,7 @@ public class CyptoControllerEndToEnd {
 	}
 	
 	@Test
-	public void getASpecificCryptocurrenciesWithInvalidSymbolTest() throws Exception {
+	void getASpecificCryptocurrenciesWithInvalidSymbolTest() throws Exception {
 		
 		String invalidSymbol = "BADUSDT";
 		
@@ -89,7 +89,7 @@ public class CyptoControllerEndToEnd {
 	}
 	
 	@Test
-	public void notFoundASpecificCryptocurrenciesWithInvalidSymbolTest() throws Exception {
+	void notFoundASpecificCryptocurrenciesWithInvalidSymbolTest() throws Exception {
 		
 		String invalidSymbol = "BADUSDT";
 		

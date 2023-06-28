@@ -24,7 +24,7 @@ import jakarta.transaction.Transactional;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Transactional
-public class UserControllerEndToEndTest {
+class UserControllerEndToEndTest {
 	
 	private static final String URL_DEPLOY = "https://unq-desapp-grupo-k-202301-production.up.railway.app";
 
@@ -57,12 +57,12 @@ public class UserControllerEndToEndTest {
     }
 
 	@Test
-	public void contextLoads() throws Exception {
+	void contextLoads() throws Exception {
 		assertThat(this.userController).isNotNull();
 	}
 
 	@Test
-	public void getAllUsersRegisteredSuccessfullyTest() throws Exception {
+	void getAllUsersRegisteredSuccessfullyTest() throws Exception {
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer " + token);
@@ -75,7 +75,7 @@ public class UserControllerEndToEndTest {
 	}
 
 	@Test
-	public void getAllUsersRegisteredSuccessfullyWithTheirPropertiesTest() throws Exception {
+	void getAllUsersRegisteredSuccessfullyWithTheirPropertiesTest() throws Exception {
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer " + token);
@@ -93,7 +93,7 @@ public class UserControllerEndToEndTest {
 	}
 
 	@Test
-	public void registerNewUserSuccessfullyTest() throws Exception {
+	void registerNewUserSuccessfullyTest() throws Exception {
 
 		ResponseEntity<String> result = restTemplate.postForEntity(URL_DEPLOY + "/p2p/register", this.anyUser, String.class);
 
@@ -104,7 +104,7 @@ public class UserControllerEndToEndTest {
 	}
 
 	@Test
-	public void registerAUserThatAlreadyExistsErroneouslyTest() throws Exception {
+	void registerAUserThatAlreadyExistsErroneouslyTest() throws Exception {
 
 		this.anyUser.setEmail("dibumartinez@mail.com");
 
@@ -115,7 +115,7 @@ public class UserControllerEndToEndTest {
 	}
 
 	@Test
-	public void registerAUserWithEmailAlreadyUsedIsNotPermittedTest() throws Exception {
+	void registerAUserWithEmailAlreadyUsedIsNotPermittedTest() throws Exception {
 
 		this.anyUser.setEmail("dibumartinez@mail.com");
 
@@ -126,7 +126,7 @@ public class UserControllerEndToEndTest {
 	}
 
 	@Test
-	public void registerAUserWithPasswordLessThanSixCharactersIsNotPermittedTest() throws Exception {
+	void registerAUserWithPasswordLessThanSixCharactersIsNotPermittedTest() throws Exception {
 
 		this.anyUser.setPassword(".Au2");
 
@@ -137,7 +137,7 @@ public class UserControllerEndToEndTest {
 	}
 
 	@Test
-	public void registerAUserWithPasswordThatDontHaveAUpperCaseIsNotPermittedTest() throws Exception {
+	void registerAUserWithPasswordThatDontHaveAUpperCaseIsNotPermittedTest() throws Exception {
 
 		this.anyUser.setPassword(".anyuseru2");
 
@@ -148,7 +148,7 @@ public class UserControllerEndToEndTest {
 	}
 
 	@Test
-	public void registerAUserWithPasswordThatDontHaveALowerCaseIsNotPermittedTest() throws Exception {
+	void registerAUserWithPasswordThatDontHaveALowerCaseIsNotPermittedTest() throws Exception {
 
 		this.anyUser.setPassword(".ANYUSER2");
 
@@ -160,7 +160,7 @@ public class UserControllerEndToEndTest {
 
 
 	@Test
-	public void registerAUserWithPasswordThatDontHaveASpecialCharacterIsNotPermittedTest() throws Exception {
+	void registerAUserWithPasswordThatDontHaveASpecialCharacterIsNotPermittedTest() throws Exception {
 
 		this.anyUser.setPassword("anyuserAu2");
 
@@ -171,7 +171,7 @@ public class UserControllerEndToEndTest {
 	}
 
 	@Test
-	public void registerAUserWithCvuThatDontHaveA22CharactersIsNotPermittedTest() throws Exception {
+	void registerAUserWithCvuThatDontHaveA22CharactersIsNotPermittedTest() throws Exception {
 
 		this.anyUser.setCvu("12334");
 
@@ -182,7 +182,7 @@ public class UserControllerEndToEndTest {
 	}
 
 	@Test
-	public void registerAUserWithCryptoWalletThatDontHave8CharactersIsNotPermittedTest() throws Exception {
+	void registerAUserWithCryptoWalletThatDontHave8CharactersIsNotPermittedTest() throws Exception {
 
 		this.anyUser.setCriptoWallet("6534");
 

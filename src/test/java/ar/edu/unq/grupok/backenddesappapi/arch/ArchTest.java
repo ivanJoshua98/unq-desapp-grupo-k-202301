@@ -10,7 +10,7 @@ import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.core.importer.ImportOption;
 
-public class ArchTests {
+class ArchTest {
 
     private JavaClasses baseClasses;
 
