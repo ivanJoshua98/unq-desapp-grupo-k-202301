@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Logs ###
+logs/spring-boot-logger.log
