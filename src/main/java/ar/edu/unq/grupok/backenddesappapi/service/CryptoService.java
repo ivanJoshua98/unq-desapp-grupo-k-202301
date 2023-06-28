@@ -13,5 +13,6 @@ public interface CryptoService {
     Crypto getCryptoBySymbol(String symbol);
     
     void deleteCryptoBySymbol(String symbol);
-	
+    
+    List<Crypto> getPriceOfLast24Hours(String symbol);
 }

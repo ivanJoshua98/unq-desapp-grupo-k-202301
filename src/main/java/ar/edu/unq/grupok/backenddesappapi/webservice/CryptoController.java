@@ -40,5 +40,13 @@ public class CryptoController {
 		List<Crypto> list = this.cryptoService.getAllCryptos();		
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@Operation(summary = "Get a crypto prices of last 24 hours")
+	@GetMapping("/last24Hours/{symbol}")
+	public ResponseEntity<List<Crypto>> getPriceOfLast24Hours(
+			@Parameter(description = "The crypto symbol that needs to be fetched", required = true) @PathVariable String symbol) {
+		List<Crypto> list = this.cryptoService.getPriceOfLast24Hours(symbol);
+		return ResponseEntity.ok().body(list);
+	}
 
 }
