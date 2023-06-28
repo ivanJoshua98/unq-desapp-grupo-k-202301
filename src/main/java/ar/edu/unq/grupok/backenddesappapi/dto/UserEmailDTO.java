@@ -15,6 +15,11 @@ public class UserEmailDTO {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	
 
+	@Override
+	public String toString() {
+		return "UserEmailDTO{" +
+				"userEmail='" + userEmail + '\'' +
+				'}';
+	}
 }

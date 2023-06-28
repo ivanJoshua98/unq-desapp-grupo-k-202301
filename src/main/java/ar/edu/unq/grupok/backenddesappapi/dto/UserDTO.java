@@ -89,4 +89,16 @@ public class UserDTO {
 	        this.criptoWallet = criptoWallet;
 	    }
 
+	@Override
+	public String toString() {
+		return "UserDTO{" +
+				"name='" + name + '\'' +
+				", lastName='" + lastName + '\'' +
+				", email='" + email + '\'' +
+				", address='" + address + '\'' +
+				", password='" + password + '\'' +
+				", cvuMercadoPago='" + cvuMercadoPago + '\'' +
+				", criptoWallet='" + criptoWallet + '\'' +
+				'}';
+	}
 }

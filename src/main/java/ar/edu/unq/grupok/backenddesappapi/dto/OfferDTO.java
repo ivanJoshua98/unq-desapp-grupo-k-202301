@@ -80,5 +80,16 @@ public class OfferDTO {
 		this.operationType = operationType;
 	}
 
-
+	@Override
+	public String toString() {
+		return "OfferDTO{" +
+				"cryptoSymbol='" + cryptoSymbol + '\'' +
+				", amountOfCrypto=" + amountOfCrypto +
+				", priceOfCrypto=" + priceOfCrypto +
+				", amountInPesos=" + amountInPesos +
+				", authorEmail='" + authorEmail + '\'' +
+				", offerState=" + offerState +
+				", operationType=" + operationType +
+				'}';
+	}
 }

@@ -38,6 +38,7 @@ out/
 
 ### Logs ###
 logs/spring-boot-logger.log
+logs/archived/spring-boot-logger*
 
 ### Mac Files ###
 .DS_Store
