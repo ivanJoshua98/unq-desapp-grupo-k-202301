@@ -27,6 +27,7 @@ import ar.edu.unq.grupok.backenddesappapi.dto.UserDTO;
 import ar.edu.unq.grupok.backenddesappapi.dto.UserLoginDTO;
 import ar.edu.unq.grupok.backenddesappapi.dto.TokenDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -112,6 +113,15 @@ public class UserController {
                     tokenInfo.getJwtToken()
                 )
                 .body(convertUserEntityToUserDTO(user));
+	}
+	
+	@Operation(summary = "Delete a user")
+	@DeleteMapping(value = "/users/delete/{email}")
+	public ResponseEntity<String> deleteUser(
+			@Parameter(description = "The user email that has to be eliminated", required = true)
+			@PathVariable String email){
+		 this.userService.deleteUserByEmail(email);
+		return ResponseEntity.ok(email);
 	}
 	
 	

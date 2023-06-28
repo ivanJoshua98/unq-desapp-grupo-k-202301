@@ -45,7 +45,7 @@ public class SecurityConfig {
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeHttpRequests()
-			.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/p2p/login", "/p2p/register", "/h2-console/**").permitAll()
+			.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/p2p/login", "/p2p/register", "p2p/users/delete/**", "/h2-console/**").permitAll()
 			.anyRequest().authenticated();
 		http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 		return http.build();

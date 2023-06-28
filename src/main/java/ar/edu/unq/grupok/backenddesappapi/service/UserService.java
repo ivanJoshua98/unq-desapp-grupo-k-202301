@@ -17,4 +17,6 @@ public interface UserService {
 	
     UserModel getUserByEmail(String email);
 
+	void deleteUserByEmail(String email);
+
 }
