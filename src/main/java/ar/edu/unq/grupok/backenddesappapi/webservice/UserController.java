@@ -96,7 +96,7 @@ public class UserController {
 	@Operation(summary = "Login a user")
 	@PostMapping("/login")
 	public ResponseEntity<UserDTO> loginUser(@Valid @RequestBody UserLoginDTO request){
-		
+
 		UserModel user = userService.getUserByEmail(request.getUserEmail());
 		
 		Authentication authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
