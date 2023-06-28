@@ -50,9 +50,7 @@ public class CryptoServiceImpl implements CryptoService{
 						  	.now()
 						  	.minusDays(1)));
 		
-		List<Crypto> prices = revisions.map(revision -> revision.getEntity()).toList();
-		
-		return prices;
+		return revisions.map(revision -> revision.getEntity()).toList();
 	}
 
 

@@ -32,7 +32,7 @@ public class EndpointLoggingAspect {
                 .collect(Collectors.joining(", "));
 
         logger.info("-Endpoint Audit-");
-        logger.info("Timestamp: " + LocalDateTime.now());
+        logger.info("Timestamp: {}" , LocalDateTime.now());
         logger.info("Endpoint invocado: {}", endpoint);
         logger.info("Parámetros: {}", parameters);
 

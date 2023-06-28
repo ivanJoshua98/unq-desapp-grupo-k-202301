@@ -35,27 +35,21 @@ public class JWTProvider {
 		String userEmail = authentication.getName();
 		Date now = new Date();
 		Date expirationToken = new Date(now.getTime() + JWT_TOKEN_VALIDITY);
-		String token = Jwts.builder()
+		return Jwts.builder()
 				.setSubject(userEmail)
 				.setIssuedAt(new Date())
 				.setExpiration(expirationToken)
 				.signWith(this.secretKey, SignatureAlgorithm.HS256)
 				.compact();
-		return token;
 	}
 	
 	public String getUserNameFromJWT(String token) {
-		/*Claims claims = Jwts.parser()
-				.setSigningKey(JWT_SECRET_KEY)
-				.parseClaimsJws(token)
-				.getBody();*/
 		Claims claims = Jwts.parserBuilder().setSigningKey(this.secretKey).build().parseClaimsJws(token).getBody();
 		return claims.getSubject();
 	}
 	
 	public Boolean validateToken(String token) {
 		try {
-			//Jwts.parser().setSigningKey(JWT_SECRET_KEY).parseClaimsJws(token);
 			Jwts.parserBuilder().setSigningKey(this.secretKey).build()
             .parseClaimsJws(token);
 			return true;

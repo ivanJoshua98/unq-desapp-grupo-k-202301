@@ -32,11 +32,6 @@ public class UserLoginDTO {
 		this.password = password;
 	}
 
-//	public String toString () {
-//		return "peter";
-//	}
-
-
 	@Override
 	public String toString() {
 		return "UserLoginDTO{" +
